@@ -81,6 +81,67 @@ app.get('/history', (req, res) => {
   res.sendFile(path.join(__dirname, 'history.html'));
 });
 
+app.get('/get_shuttles', async (req,res) => {
+  try { 
+
+    const shudata = getmodel("shuttleList");
+
+    const shuttles = await shudata.find({}, {shuttleNum: 1, _id: 0}).lean();
+
+    res.json(shuttles);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to Retrieve Data.");
+  }
+});
+
+app.get('/get_AGVS', async (req, res) => {
+
+  try {
+    const AGdata = getmodel("AGVList");
+    const AGshutles = await AGdata.find({}, {AGVnum: 1 , _id: 0}).lean();
+    res.json(AGshutles);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to Retrieve Data");
+  }
+
+});
+
 app.listen(port, () => {
   console.log("Server Running on 3000");
+});
+
+async function populateAGVs(selectId) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+
+  sel.innerHTML = '<option value="" disabled selected>Loading AGVs...</option>';
+
+  try {
+    const res = await fetch('/get_AGVS'); // your backend route
+    const agvs = await res.json();
+
+    sel.innerHTML = '<option value="" disabled selected>Select AGV Shuttle...</option>';
+
+    agvs.forEach(a => {
+      const opt = document.createElement('option');
+      opt.value = a.AGVnum; // must match your MongoDB field name
+      opt.textContent = a.AGVnum;
+      sel.appendChild(opt);
+    });
+  } catch (err) {
+    console.error("Error loading AGVs:", err);
+    sel.innerHTML = '<option value="" disabled selected>Failed to load AGVs</option>';
+  }
+}
+
+//add from mongo db collection the AGV data to check box
+
+equipmentSelect.addEventListener('change', () => {
+  const type = equipmentSelect.value;
+  dynamicFields.innerHTML = templates[type] || '';
+  if (type === 'Shuttle') populateShuttles('shuttleNum');
+  if (type === 'AGV') populateAGVs('agvNum'); 
+  if (['Shuttle','AGV','RGV','Lift'].includes(type)) populateHours(type.toLowerCase() + 'Hour');
 });

@@ -1,0 +1,241 @@
+// Get references to main DOM elements
+const equipmentSelect = document.getElementById('equipment');
+const dynamicFields = document.getElementById('dynamicFields');
+
+/**
+ * Templates for dynamic form fields based on equipment type
+ */
+const templates = {
+  Shuttle: `
+    <div class="mb-3">
+      <label class="form-label" for="shuttleReportedAt">Reported At</label>
+      <select class="form-select" id="shuttleReportedAt" name="reportedAt" required>
+        <option value="" disabled selected>Select location...</option>
+        ${Array.from({length: 11}, (_, i) => `<option value="A${i+1}">A${i+1}</option>`).join('')}
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="shuttleNum">Shuttle Number</label>
+      <select class="form-select" id="shuttleNum" name="shuttleNum" required></select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="shuttleHour">Hour</label>
+      <select class="form-select" id="shuttleHour" name="hour" required></select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="shuttleDate">Date</label>
+      <input type="date" class="form-control" id="shuttleDate" name="date" required />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="shuttleNotes">Describe Error</label>
+      <textarea class="form-control" id="shuttleNotes" name="notes" rows="3" placeholder="Enter additional details..."></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="shuttleFixedBy">Fixed By</label>
+      <select class="form-select" id="shuttleFixedBy" name="fixedBy" required>
+        <option value="" disabled selected>Select technician...</option>
+        <option value="Leonid Goz">Leonid Goz</option>
+        <option value="Tal Halbanny">Tal Halbanny</option>
+        <option value="Pavel Tishkov">Pavel Tishkov</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="shuttleSolution">Solution Made for Issue</label>
+      <textarea class="form-control" id="shuttleSolution" name="solution" rows="3" placeholder="Describe the fix..."></textarea>
+    </div>
+  `,
+  AGV: `
+    <div class="mb-3">
+      <label class="form-label" for="agvNum">AGV Number</label>
+      <select class="form-select" id="agvNum" name="agvNum" required>
+        <option value="" disabled selected>Select AGV Shuttle...</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="agvHour">Hour</label>
+      <select class="form-select" id="agvHour" name="hour" required></select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="agvDate">Date</label>
+      <input type="date" class="form-control" id="agvDate" name="date" required />
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="agvNotes">Describe Error</label>
+      <textarea class="form-control" id="agvNotes" name="notes" rows="3" placeholder="Enter additional details..."></textarea>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="agvFixedBy">Fixed By</label>
+      <select class="form-select" id="agvFixedBy" name="fixedBy" required>
+        <option value="" disabled selected>Select technician...</option>
+        <option value="Leonid Goz">Leonid Goz</option>
+        <option value="Tal Halbanny">Tal Halbanny</option>
+        <option value="Pavel Tishkov">Pavel Tishkov</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label class="form-label" for="agvSolution">Solution Made for Issue</label>
+      <textarea class="form-control" id="agvSolution" name="solution" rows="3" placeholder="Describe the fix..."></textarea>
+    </div>
+  `,
+  // Add templates for RGV and Lift similarly...
+};
+
+/**
+ * Populate hour options (00:00, 00:30, ... 23:30) for a select element
+ * @param {string} selectId
+ */
+function populateHours(selectId) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  sel.innerHTML = '';
+
+  for (let h = 0; h < 24; h++) {
+    for (const m of ['00','30']) {
+      const time = `${String(h).padStart(2,'0')}:${m}`;
+      const opt = document.createElement('option');
+      opt.value = time;
+      opt.textContent = time;
+      sel.appendChild(opt);
+    }
+  }
+}
+
+/**
+ * Populate Shuttle dropdown from MongoDB
+ * @param {string} selectId
+ */
+async function populateShuttles(selectId) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  sel.innerHTML = '<option value="" disabled selected>Loading Shuttles...</option>';
+
+  try {
+    const res = await fetch('/get_shuttles');
+    const shuttles = await res.json();
+    sel.innerHTML = '<option value="" disabled selected>Select Shuttle...</option>';
+
+    shuttles.forEach(s => {
+      const opt = document.createElement('option');
+      opt.value = s.shuttleNum;
+      opt.textContent = s.shuttleNum;
+      sel.appendChild(opt);
+    });
+  } catch (err) {
+    console.error("Error loading shuttles:", err);
+    sel.innerHTML = '<option value="" disabled selected>Failed to load Shuttles</option>';
+  }
+}
+
+/**
+ * Populate AGV dropdown from MongoDB
+ * @param {string} selectId
+ */
+async function populateAGVs(selectId) {
+  const sel = document.getElementById(selectId);
+  if (!sel) return;
+  sel.innerHTML = '<option value="" disabled selected>Loading AGVs...</option>';
+
+  try {
+    const res = await fetch('/get_AGVS');
+    const agvs = await res.json();
+    sel.innerHTML = '<option value="" disabled selected>Select AGV Shuttle...</option>';
+
+    agvs.forEach(a => {
+      const opt = document.createElement('option');
+      opt.value = a.AGVnum;
+      opt.textContent = a.AGVnum;
+      sel.appendChild(opt);
+    });
+  } catch (err) {
+    console.error("Error loading AGVs:", err);
+    sel.innerHTML = '<option value="" disabled selected>Failed to load AGVs</option>';
+  }
+}
+
+/**
+ * Handle dynamic form fields on equipment change
+ */
+equipmentSelect.addEventListener('change', () => {
+  const type = equipmentSelect.value;
+  dynamicFields.innerHTML = templates[type] || '';
+
+  if (type === 'Shuttle') populateShuttles('shuttleNum');
+  if (type === 'AGV') populateAGVs('agvNum');
+
+  if (['Shuttle', 'AGV', 'RGV', 'Lift'].includes(type)) {
+    populateHours(type.toLowerCase() + 'Hour');
+  }
+});
+
+/**
+ * Handle equipment form submission
+ */
+document.getElementById('equipmentForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+  const data = Object.fromEntries(formData.entries());
+
+  try {
+    const res = await fetch('/submit-form', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data)
+    });
+    const msg = await res.text();
+    alert(msg);
+
+    e.target.reset();
+    dynamicFields.innerHTML = '';
+  } catch (err) {
+    console.error(err);
+    alert('Failed to submit report.');
+  }
+});
+
+/**
+ * Handle history form submission and display results
+ */
+document.getElementById('historyForm')?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+
+  const equipment = document.querySelector('input[name="equipment"]:checked')?.value;
+  const month = document.getElementById('monthFilter')?.value;
+
+  if (!equipment) return alert("Please select equipment type.");
+
+  try {
+    const res = await fetch('/get-history', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ equipment, month })
+    });
+
+    const data = await res.json();
+    const resultsDiv = document.getElementById('results');
+    const tbody = document.getElementById('resultsBody');
+    tbody.innerHTML = '';
+
+    if (data.length === 0) {
+      tbody.innerHTML = '<tr><td colspan="7">No records found.</td></tr>';
+    } else {
+      data.forEach(doc => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${doc.reportedAt || 'N/A'}</td>
+            <td>${doc.shuttleNum || doc.agvNum || doc.rgvNum || doc.liftNum || 'N/A'}</td>
+            <td>${doc.hour || 'N/A'}</td>
+            <td>${doc.date || 'N/A'}</td>
+            <td>${doc.notes || 'N/A'}</td>
+            <td>${doc.fixedBy || 'N/A'}</td>
+            <td>${doc.solution || 'N/A'}</td>
+          </tr>
+        `;
+      });
+    }
+
+    resultsDiv.classList.remove('d-none');
+  } catch (err) {
+    console.error("Error fetching history:", err);
+    alert("Failed to fetch history. Please try again.");
+  }
+});

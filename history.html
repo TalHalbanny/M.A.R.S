@@ -98,7 +98,7 @@
     </div>
   </div>
 </div>
-
+//j
 
  <div class="card text-center mx-auto" style="max-width: 450px; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.1);">
     <div class="card-body">
@@ -107,54 +107,6 @@
       <a href="/" class="btn btn-danger w-100">Report Screen</a>
     </div>
 </div>
-
-<script>
-document.getElementById('historyForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
-
-  const equipment = document.querySelector('input[name="equipment"]:checked').value;
-  const month = document.getElementById('monthFilter').value;
-
-  try {
-    // send both equipment and month
-    const res = await fetch('/get-history', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ equipment, month })
-    });
-
-    const data = await res.json();
-
-    const resultsDiv = document.getElementById('results');
-    const tbody = document.getElementById('resultsBody');
-    tbody.innerHTML = '';
-
-    if (data.length === 0) {
-      tbody.innerHTML = '<tr><td colspan="7">No records found.</td></tr>';
-    } else {
-      data.forEach(doc => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${doc.reportedAt || 'N/A'}</td>
-            <td>${doc.shuttleNum || doc.agvNum || doc.rgvNum || doc.liftNum || 'N/A'}</td>
-            <td>${doc.hour || 'N/A'}</td>
-            <td>${doc.date || 'N/A'}</td>
-            <td>${doc.notes || 'N/A'}</td>
-            <td>${doc.fixedBy || 'N/A'}</td>
-            <td>${doc.solution || 'N/A'}</td>
-          </tr>
-        `;
-      });
-    }
-
-    resultsDiv.classList.remove('d-none');
-  } catch (err) {
-    console.error("Error fetching history:", err);
-    alert("Failed to fetch history. Please try again.");
-  }
-});
-</script>
-
-
+<script src="functions.js"></script> 
 </body>
 </html>
