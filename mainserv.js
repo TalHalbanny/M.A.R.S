@@ -1,3 +1,5 @@
+//require necceserry
+
 const fs = require('fs');
 const path = require('path');
 const bodyparser = require('body-parser');
@@ -5,7 +7,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 
 const port = 3000; 
-const app = express();
+const app = express(); //create app express
 
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());

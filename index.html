@@ -66,6 +66,13 @@
     const templates = {
       Shuttle: `
         <div class="mb-3">
+          <label class="form-label" for="shuttleReportedAt">Reported At</label>
+          <select class="form-select" id="shuttleReportedAt" name="reportedAt" required>
+            <option value="" disabled selected>Select location...</option>
+            ${Array.from({length: 11}, (_, i) => `<option value="A${i+1}">A${i+1}</option>`).join('')}
+          </select>
+        </div>
+        <div class="mb-3">
           <label class="form-label" for="shuttleNum">Shuttle Number</label>
           <select class="form-select" id="shuttleNum" name="shuttleNum" required></select>
         </div>
@@ -249,7 +256,7 @@
       if (['Shuttle','AGV','RGV','Lift'].includes(type)) populateHours(type.toLowerCase() + 'Hour');
     });
 
-    document.getElementById('equipmentForm').addEventListener('submit', async (e) => {
+       document.getElementById('equipmentForm').addEventListener('submit', async (e) => {
       e.preventDefault();
       const formData = new FormData(e.target);
       const data = Object.fromEntries(formData.entries());
@@ -270,14 +277,7 @@
         alert('Failed to submit report.');
       }
     });
-    
-  const monthFilter = document.getElementById('monthFilter').value;
 
-  const res = await fetch('/get-history', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/json' },
-  body: JSON.stringify({ equipment, month: monthFilter })
-});
 
 </script>
 
