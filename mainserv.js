@@ -112,36 +112,3 @@ app.listen(port, () => {
   console.log("Server Running on 3000");
 });
 
-async function populateAGVs(selectId) {
-  const sel = document.getElementById(selectId);
-  if (!sel) return;
-
-  sel.innerHTML = '<option value="" disabled selected>Loading AGVs...</option>';
-
-  try {
-    const res = await fetch('/get_AGVS'); // your backend route
-    const agvs = await res.json();
-
-    sel.innerHTML = '<option value="" disabled selected>Select AGV Shuttle...</option>';
-
-    agvs.forEach(a => {
-      const opt = document.createElement('option');
-      opt.value = a.AGVnum; // must match your MongoDB field name
-      opt.textContent = a.AGVnum;
-      sel.appendChild(opt);
-    });
-  } catch (err) {
-    console.error("Error loading AGVs:", err);
-    sel.innerHTML = '<option value="" disabled selected>Failed to load AGVs</option>';
-  }
-}
-
-//add from mongo db collection the AGV data to check box
-
-equipmentSelect.addEventListener('change', () => {
-  const type = equipmentSelect.value;
-  dynamicFields.innerHTML = templates[type] || '';
-  if (type === 'Shuttle') populateShuttles('shuttleNum');
-  if (type === 'AGV') populateAGVs('agvNum'); 
-  if (['Shuttle','AGV','RGV','Lift'].includes(type)) populateHours(type.toLowerCase() + 'Hour');
-});
