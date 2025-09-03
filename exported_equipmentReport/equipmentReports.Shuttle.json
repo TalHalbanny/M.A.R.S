@@ -1,0 +1,198 @@
+[{
+  "_id": {
+    "$oid": "68b40786d5152fd74f583070"
+  },
+  "shuttleNum": "58",
+  "hour": "09:30",
+  "date": "2025-08-31",
+  "notes": "Aislewise Moving Wheels Error",
+  "fixedBy": "Tal Halbanny",
+  "solution": "Reset and Positioning to Charging Station was made, Shuttle Fixed",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b412b8d5152fd74f583072"
+  },
+  "shuttleNum": "22",
+  "hour": "11:30",
+  "date": "2025-08-31",
+  "notes": "Conflict with the retrieval / storage command, rail interrupted with right box sensor",
+  "fixedBy": "Tal Halbanny",
+  "solution": "Rail aligned away from sensor area, box was aligned as well for better  retrieval ",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b42071d5152fd74f583074"
+  },
+  "shuttleNum": "1",
+  "hour": "13:30",
+  "date": "2025-08-31",
+  "notes": "The servo telescopic  fork drive communication was inturrupted. - Aisle 1.",
+  "fixedBy": "Tal Halbanny",
+  "solution": "return to charging station, reset and restore.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b42722ff54406590188808"
+  },
+  "shuttleNum": "30",
+  "hour": "13:30",
+  "date": "2025-08-31",
+  "notes": "Failure on finger, failed to retrieve box, left protection",
+  "fixedBy": "Tal Halbanny",
+  "solution": "box was not located properly, relocated box.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b42d17ff54406590188815"
+  },
+  "shuttleNum": "26",
+  "hour": "14:00",
+  "date": "2025-08-31",
+  "notes": "shelf rail interrupted sensor on aisle 5. retrieval conflict.",
+  "fixedBy": "Tal Halbanny",
+  "solution": "rail adjusted to be out of sensor range.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b43553ff5440659018881c"
+  },
+  "shuttleNum": "3",
+  "hour": "14:30",
+  "date": "2025-08-31",
+  "reportedAt": "A1",
+  "notes": "right protection, failed to retrieve box.",
+  "fixedBy": "Tal Halbanny",
+  "solution": "reset and restore",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b43ca8ff54406590188820"
+  },
+  "shuttleNum": "54",
+  "hour": "15:00",
+  "date": "2025-08-31",
+  "reportedAt": "A9",
+  "notes": "unable to retrieve inbound box, box weight over 36kg",
+  "fixedBy": "Tal Halbanny",
+  "solution": "box was set back to place (IB9 Lift), shuttle reset and restore.",
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b53969c29a83e6bf2d3245"
+  },
+  "shuttleNum": "5",
+  "hour": "09:00",
+  "date": "2025-09-01",
+  "notes": "Alignment Error",
+  "fixedBy": "Tal Halbanny",
+  "solution": "Reset and Restore, returned to charging station.",
+  "createdAt": {
+    "$date": "2025-09-01T06:12:57.008Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-01T06:12:57.008Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b539b7c29a83e6bf2d3247"
+  },
+  "shuttleNum": "4",
+  "hour": "09:00",
+  "date": "2025-09-01",
+  "notes": "Fork Communitcation Error, failed to retrieve box.",
+  "fixedBy": "Tal Halbanny",
+  "solution": "Arms was folded back to place, reset and restore. ",
+  "createdAt": {
+    "$date": "2025-09-01T06:14:15.700Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-01T06:14:15.700Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b53fdec29a83e6bf2d3249"
+  },
+  "reportedAt": "A2",
+  "shuttleNum": "4",
+  "hour": "09:30",
+  "date": "2025-09-01",
+  "notes": "Test",
+  "fixedBy": "Tal Halbanny",
+  "solution": "Test",
+  "createdAt": {
+    "$date": "2025-09-01T06:40:30.252Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-01T06:40:30.252Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b54099c29a83e6bf2d324d"
+  },
+  "reportedAt": "A6",
+  "shuttleNum": "35",
+  "hour": "10:00",
+  "date": "2025-09-01",
+  "notes": "Maintenance required - Aislewise Moving Wheels",
+  "fixedBy": "Tal Halbanny",
+  "solution": "Return to Charging station, reset and restore in PLC.",
+  "createdAt": {
+    "$date": "2025-09-01T06:43:37.646Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-01T06:43:37.646Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b546b9c29a83e6bf2d324f"
+  },
+  "reportedAt": "A1",
+  "shuttleNum": "4",
+  "hour": "10:00",
+  "date": "2025-09-01",
+  "notes": "Right protection, no communication error right fork arm",
+  "fixedBy": "Tal Halbanny",
+  "solution": "fold back arms into place, resume to charging station, reset.",
+  "createdAt": {
+    "$date": "2025-09-01T07:09:45.450Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-01T07:09:45.450Z"
+  },
+  "__v": 0
+},
+{
+  "_id": {
+    "$oid": "68b54707c29a83e6bf2d3251"
+  },
+  "reportedAt": "A1",
+  "shuttleNum": "1",
+  "hour": "10:00",
+  "date": "2025-09-01",
+  "notes": "shuttle communication lost, stuck inside elevator.",
+  "fixedBy": "Tal Halbanny",
+  "solution": "elevator task canceled, shuttle was out of the elevator into charging station, reset.",
+  "createdAt": {
+    "$date": "2025-09-01T07:11:03.488Z"
+  },
+  "updatedAt": {
+    "$date": "2025-09-01T07:11:03.488Z"
+  },
+  "__v": 0
+}]
