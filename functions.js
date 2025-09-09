@@ -300,19 +300,28 @@ document.getElementById('historyForm')?.addEventListener('submit', async (e) => 
     if (data.length === 0) {
       tbody.innerHTML = '<tr><td colspan="7">No records found.</td></tr>';
     } else {
-      data.forEach(doc => {
-        tbody.innerHTML += `
-          <tr>
-            <td>${doc.reportedAt || 'N/A'}</td>
-            <td>${doc.shuttleNum || doc.agvNum || doc.rgvNum || doc.liftNum || 'N/A'}</td>
-            <td>${doc.hour || 'N/A'}</td>
-            <td>${doc.date || 'N/A'}</td>
-            <td>${doc.notes || 'N/A'}</td>
-            <td>${doc.fixedBy || 'N/A'}</td>
-            <td>${doc.solution || 'N/A'}</td>
-          </tr>
-        `;
-      });
+     data.forEach(doc => {
+  const reportedAt = doc.reportedAt || 'N/A';
+  const number = doc.shuttleNum || doc.agvNum || doc.rgvNum || doc.liftNum || 'N/A';
+  const hour = doc.hour || 'N/A';
+  const date = doc.shuttleDate || doc.agvDate || doc.rgvDate || doc.liftDate || 'N/A';
+  const notes = doc.notes || 'N/A';
+  const fixedBy = doc.fixedBy || 'N/A';
+  const solution = doc.solution || 'N/A';
+
+  tbody.innerHTML += `
+    <tr>
+      <td>${reportedAt}</td>
+      <td>${number}</td>
+      <td>${hour}</td>
+      <td>${date !== 'N/A' ? new Date(date).toLocaleDateString() : 'N/A'}</td>
+      <td>${notes}</td>
+      <td>${fixedBy}</td>
+      <td>${solution}</td>
+    </tr>
+  `;
+});
+
     }
 
     resultsDiv.classList.remove('d-none');

@@ -23,53 +23,136 @@ function getmodel(equipmentType) {
   return mongoose.model(equipmentType, genericSchema, equipmentType);
 }
 
+const collectionMap = {
+  Shuttle: "Shuttle",
+  AGV: "AGV",
+  RGV: "RGV",
+  Lift: "Lift"
+};
+
+
+
 app.post('/submit-form', async (req, res) => {
   try {
     const { equipment, ...data } = req.body;
+    if (!equipment) return res.status(400).send("Missing Equipment Type!");
 
-    if (!equipment) {
-      return res.status(400).send("Missing Equipment Type!");
+    const collectionName = collectionMap[equipment];
+    if (!collectionName) return res.status(400).send("Invalid equipment type!");
+
+    const equipmentModel = getmodel(collectionName);
+
+    // Map generic form fields to equipment-specific fields
+    let mappedData = { equipment }; // always store equipment type
+
+    switch (equipment) {
+      case "Shuttle":
+        mappedData = {
+          equipment,
+          shuttleNum: data.shuttleNum,
+          reportedAt: data.reportedAt,
+          hour: data.hour,
+          shuttleDate: new Date(data.date),
+          notes: data.notes,
+          fixedBy: data.fixedBy,
+          solution: data.solution
+        };
+        break;
+
+      case "AGV":
+        mappedData = {
+          equipment,
+          agvNum: data.agvNum,
+          hour: data.hour,
+          agvDate: new Date(data.date),
+          notes: data.notes,
+          fixedBy: data.fixedBy,
+          solution: data.solution
+        };
+        break;
+
+      case "RGV":
+        mappedData = {
+          equipment,
+          rgvNum: data.rgvNum,
+          hour: data.hour,
+          rgvDate: new Date(data.date),
+          notes: data.notes,
+          fixedBy: data.fixedBy,
+          solution: data.solution
+        };
+        break;
+
+      case "Lift":
+        mappedData = {
+          equipment,
+          liftNum: data.liftNum,
+          hour: data.hour,
+          liftDate: new Date(data.date),
+          notes: data.notes,
+          fixedBy: data.fixedBy,
+          solution: data.solution
+        };
+        break;
+
+      default:
+        return res.status(400).send("Unknown equipment type");
     }
 
-    const equipmentModel = getmodel(equipment);
-    const doc = new equipmentModel(data);
+    const doc = new equipmentModel(mappedData);
     await doc.save();
 
-    console.log(`Inserted into ${equipment} collection:`, data);
-    res.send(`Data was successfully inserted into ${equipment} collection`);
+    console.log(`Inserted into ${collectionName} collection:`, mappedData);
+    res.send(`Data was successfully inserted into ${collectionName} collection`);
   } catch (err) {
     console.error("Error Detected:", err);
     res.status(500).send("Process Error! Save Was Unsuccessful");
   }
 });
 
+
+
+
 app.post('/get-history', async (req, res) => {
   try {
     const { equipment, month } = req.body;
+    console.log("Request body:", req.body);
 
-    if (!equipment) {
-      return res.status(400).send("Must choose equipment type for history");
-    }
+    if (!equipment) return res.status(400).send("Must choose equipment type");
 
-    const equipmentModel = getmodel(equipment);
+    const collectionName = collectionMap[equipment];
+    if (!collectionName) return res.status(400).send("Invalid equipment type");
+
+    const equipmentModel = getmodel(collectionName);
+
     let query = {};
 
+    // Determine the correct date field for the selected equipment
+    let dateField = "";
+    switch (equipment) {
+      case "Shuttle": dateField = "date"; break;
+      case "AGV": dateField = "agvDate"; break;
+      case "RGV": dateField = "rgvDate"; break;
+      case "Lift": dateField = "liftDate"; break;
+      default: dateField = "createdAt"; break;
+    }
+
+    // If a month is selected, filter by that month
     if (month) {
       const [year, mon] = month.split("-");
       const monthIndex = parseInt(mon, 10) - 1;
-
-      const start = new Date(year, monthIndex, 1, 0, 0, 0);
+      const start = new Date(year, monthIndex, 1);
       const end = new Date(year, monthIndex + 1, 0, 23, 59, 59);
 
-      query = {
-        $or: [
-          { createdAt: { $gte: start, $lte: end } },
-          { date: { $regex: `^${year}-${String(mon).padStart(2, '0')}` } } 
-        ]
-      };
+      query[dateField] = { $gte: start, $lte: end };
     }
 
-    const docs = await equipmentModel.find(query).sort({ createdAt: -1 }).lean();
+    console.log("Mongo query:", query);
+
+    // Fetch documents sorted by the date field
+    const docs = await equipmentModel.find(query).sort({ [dateField]: -1 }).lean();
+    console.log("Fetched docs:", docs);
+
     res.json(docs);
   } catch (err) {
     console.error(err);
@@ -77,9 +160,16 @@ app.post('/get-history', async (req, res) => {
   }
 });
 
+
+
 app.get('/history', (req, res) => { 
   res.sendFile(path.join(__dirname, 'history.html'));
 });
+
+app.get('/report', (req,res) =>{
+  res.sendFile(path.join(__dirname,'report.html'));
+});
+
 
 app.get('/get_shuttles', async (req,res) => {
   try { 

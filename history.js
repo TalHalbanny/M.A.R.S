@@ -1,0 +1,79 @@
+// history.js
+
+
+  const historyForm = document.getElementById('historyForm');
+  const resultsDiv = document.getElementById('results');
+  const resultsBody = document.getElementById('resultsBody');
+  const monthInput = document.getElementById('monthFilter');
+
+  // ... all your fetchHistory() and event listeners here ...
+
+
+
+function formatDate(dateStr) {
+  if (!dateStr) return 'N/A';
+  const d = new Date(dateStr);
+  if (isNaN(d)) return 'N/A';
+  return d.toLocaleDateString();
+}
+
+async function fetchHistory(equipment, month) {
+  try {
+    const res = await fetch('/get-history', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ equipment, month })
+    });
+
+    if (!res.ok) throw new Error('Failed to fetch history');
+    const data = await res.json();
+
+    resultsBody.innerHTML = '';
+
+    if (data.length === 0) {
+      resultsBody.innerHTML = `<tr><td colspan="7">No records found.</td></tr>`;
+      resultsDiv.classList.remove('d-none');
+      return;
+    }
+
+    data.forEach(doc => {
+      const reportedAt = doc.reportedAt || 'N/A';
+      const number = doc.shuttleNum || doc.agvNum || doc.rgvNum || doc.liftNum || 'N/A';
+      const hour = doc.hour || 'N/A';
+      const date = doc.date || 'N/A';
+      const notes = doc.notes || 'N/A';
+      const fixedBy = doc.fixedBy || 'N/A';
+      const solution = doc.solution || 'N/A';
+
+      resultsBody.innerHTML += `
+        <tr>
+          <td>${reportedAt}</td>
+          <td>${number}</td>
+          <td>${hour}</td>
+          <td>${formatDate(date)}</td>
+          <td>${notes}</td>
+          <td>${fixedBy}</td>
+          <td>${solution}</td>
+        </tr>
+      `;
+    });
+
+    resultsDiv.classList.remove('d-none');
+  } catch (err) {
+    console.error(err);
+    alert('Error fetching history. Check console for details.');
+  }
+}
+
+historyForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const equipment = historyForm.querySelector('input[name="equipment"]:checked')?.value;
+  const month = monthInput.value;
+  if (!equipment) return alert('Please select an equipment type.');
+  fetchHistory(equipment, month);
+});
+
+monthInput.addEventListener('change', () => {
+  const equipment = historyForm.querySelector('input[name="equipment"]:checked')?.value;
+  if (equipment) fetchHistory(equipment, monthInput.value);
+});

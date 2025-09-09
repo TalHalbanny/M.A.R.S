@@ -6,54 +6,105 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
-    body {
+  
+  body {
       background: #f2f4f7;
       font-family: 'Segoe UI', sans-serif;
     }
-    .container {
+
+    /* Page content container */
+    .page-container {
       max-width: 900px;
       margin: 5vh auto;
     }
+
     .card {
       border-radius: 16px;
       padding: 30px;
       background: #fff;
       box-shadow: 0 10px 30px rgba(0,0,0,0.08);
     }
+
     h1, h3 {
       text-align: center;
       margin-bottom: 30px;
     }
+
     table {
       margin-top: 20px;
     }
+
     th {
       background-color: #f12e2e !important;
       color: #fff;
     }
+
     td, th {
       vertical-align: middle;
     }
 
     th:nth-child(4),
     td:nth-child(4) {
-    width: 140px; 
-  }
+      width: 140px; 
+    }
+
+    /* Navbar hover effect */
+    .navbar-nav .nav-link {
+      transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: var(--bs-danger) !important;
+    }
+
+    /* Optional: reduce default navbar padding for slimmer height */
+    .navbar {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
 
   </style>
 </head>
+
 <body>
 
-<br>
-<h1 class="text-center">M.A.R.S - Maintenance And Report System</h1>
+  <nav class="navbar navbar-expand-lg bg-light shadow-sm">
+  <div class="container">
+    <a class="navbar-brand fw-bold text-danger" href="#">Megastore M.A.R.S</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+      aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-<div class="form-group mt-3 text-center">
+    <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item">
+          <a class="nav-link active text-dark" aria-current="page" href="/">Main</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="/report">Report Issue</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="/history">Report History</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-dark" href="#">Shuttles</a>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<br>
+
+<!-- Month Filter -->
+<div class="text-center mb-4">
   <label for="monthFilter"><strong>Filter by Year & Month:</strong></label>
   <input type="month" id="monthFilter" class="form-control d-inline-block w-auto">
 </div>
 
-
-<div class="container">
+<!-- Page Content -->
+<div class="page-container">
   <div class="card">
     <h1>Maintenance Report History</h1>
     <h3>Select Equipment Type</h3>
@@ -75,8 +126,7 @@
         <input class="form-check-input" type="radio" name="equipment" value="Lift">
         <label class="form-check-label">Lift</label>
       </div>
-      <br>
-      <br>
+      <br><br>
       <button type="submit" class="btn btn-danger mt-3">View History</button>
     </form>
 
@@ -98,15 +148,7 @@
     </div>
   </div>
 </div>
-//j
-
- <div class="card text-center mx-auto" style="max-width: 450px; border-radius: 12px; box-shadow: 0 6px 18px rgba(0,0,0,0.1);">
-    <div class="card-body">
-      <h5>Return to Report Screen</h5>
-      <br>
-      <a href="/" class="btn btn-danger w-100">Report Screen</a>
-    </div>
-</div>
-<script src="functions.js"></script> 
+  <script src="history.js"></script> 
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
