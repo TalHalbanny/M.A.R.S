@@ -1,0 +1,70 @@
+:root{
+--card-radius: 16px;
+--accent: #d6333f; /* bootstrap danger-ish */
+--muted: #6b6f76;
+}
+
+
+body{
+font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+background: #f6f7f9;
+padding: 2rem;
+}
+
+
+.card-elegant{
+border: none;
+border-radius: var(--card-radius);
+box-shadow: 0 6px 20px rgba(25,30,35,0.06);
+background: linear-gradient(180deg, #ffffff 0%, #fbfcfd 100%);
+overflow: hidden;
+}
+
+
+.card-header-custom{
+padding: 1.25rem 1.25rem;
+border-bottom: 1px solid rgba(0,0,0,0.04);
+display:flex;
+align-items:center;
+gap: .75rem;
+}
+
+
+.accent-strip{
+width: 6px;
+height: 48px;
+border-radius: 8px;
+background: linear-gradient(180deg, var(--accent), #b02a34);
+flex-shrink:0;
+}
+
+
+.card-title{
+margin:0;
+font-weight:600;
+font-size:1.05rem;
+color:#111317;
+}
+
+
+.card-sub{
+font-size:.85rem;
+color:var(--muted);
+}
+
+
+/* list styles */
+.list-group-item.custom{
+border: none;
+padding: .9rem 1rem;
+border-radius: 10px;
+transition: transform .14s ease, box-shadow .14s ease;
+margin-bottom: .6rem;
+background: linear-gradient(180deg, #fff 0%, #fbfbfb 100%);
+}
+
+
+.list-group-item.custom:hover{
+transform: translateY(-3px);
+box-shadow: 0 8px 20px rgba(16,24,32,0.06);
+}

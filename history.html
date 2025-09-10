@@ -48,7 +48,6 @@
       width: 140px; 
     }
 
-    /* Navbar hover effect */
     .navbar-nav .nav-link {
       transition: color 0.3s ease;
     }
@@ -57,20 +56,36 @@
       color: var(--bs-danger) !important;
     }
 
-    /* Optional: reduce default navbar padding for slimmer height */
     .navbar {
       padding-top: 0.5rem;
       padding-bottom: 0.5rem;
     }
+
+    /* Make navbar full width and fixed height */
+.navbar {
+  width: 100%;         /* Full screen width */
+  min-height: 60px;    /* Set a consistent height */
+  padding-top: 0.5rem; /* Optional: adjust vertical padding */
+  padding-bottom: 0.5rem;
+}
+
+.navbar-brand {
+  line-height: 1;      /* Ensures the brand aligns nicely vertically */
+}
+
+.navbar .navbar-nav .nav-link {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
 
   </style>
 </head>
 
 <body>
 
-  <nav class="navbar navbar-expand-lg bg-light shadow-sm">
+<nav class="navbar navbar-expand-lg bg-light shadow-sm">
   <div class="container">
-    <a class="navbar-brand fw-bold text-danger" href="#">Megastore M.A.R.S</a>
+    <a class="navbar-brand fw-bold text-danger" href="/">Megastore M.A.R.S</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -88,6 +103,9 @@
           <a class="nav-link text-dark" href="/history">Report History</a>
         </li>
         <li class="nav-item">
+          <a class="nav-link text-dark" href="#">Create Crew Task</a>
+        </li>
+        <li class="nav-item">
           <a class="nav-link text-dark" href="#">Shuttles</a>
         </li>
       </ul>
@@ -97,13 +115,11 @@
 
 <br>
 
-<!-- Month Filter -->
 <div class="text-center mb-4">
   <label for="monthFilter"><strong>Filter by Year & Month:</strong></label>
   <input type="month" id="monthFilter" class="form-control d-inline-block w-auto">
 </div>
 
-<!-- Page Content -->
 <div class="page-container">
   <div class="card">
     <h1>Select Equipment Type</h1>
