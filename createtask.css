@@ -1,0 +1,40 @@
+    body {
+      background: #f8f9fa;
+      height: 100vh; /* ensure full screen height */
+      margin: 0;
+    }
+    .card-custom {
+      background: #fff;
+      border-radius: 1rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    }
+
+      .navbar-nav .nav-link {
+      transition: color 0.3s ease;
+    }
+
+    .navbar-nav .nav-link:hover {
+      color: var(--bs-danger) !important;
+    }
+
+    .navbar {
+      padding-top: 0.5rem;
+      padding-bottom: 0.5rem;
+    }
+
+    /* Make navbar full width and fixed height */
+.navbar {
+  width: 100%;         /* Full screen width */
+  min-height: 60px;    /* Set a consistent height */
+  padding-top: 0.5rem; /* Optional: adjust vertical padding */
+  padding-bottom: 0.5rem;
+}
+
+.navbar-brand {
+  line-height: 1;      /* Ensures the brand aligns nicely vertically */
+}
+
+.navbar .navbar-nav .nav-link {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}

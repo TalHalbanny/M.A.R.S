@@ -1,4 +1,3 @@
-//require necceserry
 
 const fs = require('fs');
 const path = require('path');
@@ -18,6 +17,8 @@ mongoose.connect('mongodb://localhost:27017/equipmentReports')
   .catch(err => console.error("MongoDB connection error:", err));
 
 const genericSchema = new mongoose.Schema({}, { strict: false, timestamps: true });
+const messageSchema = new mongoose.Schema({}, {strict: false, timestamps: true });
+const Message = mongoose.model("messages", messageSchema, "messages")
 
 function getmodel(equipmentType) {
   return mongoose.model(equipmentType, genericSchema, equipmentType);
@@ -35,7 +36,6 @@ const collectionMap = {
   RGV: "RGV",
   Lift: "Lift"
 };
-
 
 
 
@@ -105,7 +105,7 @@ app.post('/submit-form', async (req, res) => {
         return res.status(400).send("Unknown equipment type");
     }
 
-    const doc = new equipmentModel(mappedData);
+    const doc = new equipmentModel(mappedData);a
     await doc.save();
 
     console.log(`Inserted into ${collectionName} collection:`, mappedData);
@@ -132,7 +132,6 @@ app.post('/get-history', async (req, res) => {
 
     let query = {};
 
-    // Determine the correct date field for the selected equipment
     let dateField = "";
     switch (equipment) {
       case "Shuttle": dateField = "date"; break;
@@ -170,7 +169,6 @@ app.post('/get-history', async (req, res) => {
 });
 
 
-
 app.get('/history', (req, res) => { 
   res.sendFile(path.join(__dirname, 'history.html'));
 });
@@ -179,6 +177,9 @@ app.get('/report', (req,res) =>{
   res.sendFile(path.join(__dirname,'report.html'));
 });
 
+app.get('/createtask', (req,res) => {
+  res.sendFile(path.join(__dirname, 'createtask.html'));
+});
 
 app.get('/get_shuttles', async (req,res) => {
   try { 
@@ -192,6 +193,35 @@ app.get('/get_shuttles', async (req,res) => {
     console.error(err);
     res.status(500).send("Failed to Retrieve Data.");
   }
+});
+
+app.post('/submit-message', async (req,res) => {
+
+  try{
+
+  const {importance, technician, message} = req.body;
+
+  if (!importance || !technician || !message) {
+  return res.status(404).send("Missing Required Fields!");
+  }
+
+  const new_message = new Message({
+    technician,
+    message,
+    importance,
+    createdAt: new Date()
+  })
+
+  await new_message.save();
+
+  console.log("Message Saved Succefully!");
+  res.send("Message was Succusfully Saved!")
+
+  } catch (err){
+    console.error("Failed to Insert Message!", err);
+    res.status(505).send("Failed to Insert Data!");
+  }
+
 });
 
 app.get('/get_AGVS', async (req, res) => {
