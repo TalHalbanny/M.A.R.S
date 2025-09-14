@@ -1,24 +1,42 @@
 
+//connect relevant libreries.
+
 const fs = require('fs');
 const path = require('path');
 const bodyparser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 
+//connect and declare port number
+
 const port = 3000; 
-const app = express(); //create app express
+const app = express(); 
+
+//use body parser for requests and app.use for path declaration.
 
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 app.use(express.static(path.join(__dirname)));
 
+//connect to mongoDB Database.
+
 mongoose.connect('mongodb://localhost:27017/equipmentReports')
   .then(() => console.log("Connected to MongoDB"))
   .catch(err => console.error("MongoDB connection error:", err));
 
+//Schemas for data retrivals from collections.
+
 const genericSchema = new mongoose.Schema({}, { strict: false, timestamps: true });
-const messageSchema = new mongoose.Schema({}, {strict: false, timestamps: true });
+
+const messageSchema = new mongoose.Schema({
+  message: String,
+  technician: String,
+  importance: String
+}, { timestamps: true });
+
 const Message = mongoose.model("messages", messageSchema, "messages")
+
+//getmodel Function for getting schema and quering the database acts as a short-cut.
 
 function getmodel(equipmentType) {
   return mongoose.model(equipmentType, genericSchema, equipmentType);
@@ -58,7 +76,7 @@ app.post('/submit-form', async (req, res) => {
           shuttleNum: data.shuttleNum,
           reportedAt: data.reportedAt,
           hour: data.hour,
-          date: createUTCDate(data.date), // USE HELPER
+          date: createUTCDate(data.date), 
           notes: data.notes,
           fixedBy: data.fixedBy,
           solution: data.solution
@@ -70,7 +88,7 @@ app.post('/submit-form', async (req, res) => {
           equipment,
           agvNum: data.agvNum,
           hour: data.hour,
-          agvDate: createUTCDate(data.date), // USE HELPER
+          agvDate: createUTCDate(data.date), 
           notes: data.notes,
           fixedBy: data.fixedBy,
           solution: data.solution
@@ -82,7 +100,7 @@ app.post('/submit-form', async (req, res) => {
           equipment,
           rgvNum: data.rgvNum,
           hour: data.hour,
-          rgvDate: createUTCDate(data.date), // USE HELPER
+          rgvDate: createUTCDate(data.date), 
           notes: data.notes,
           fixedBy: data.fixedBy,
           solution: data.solution
@@ -94,7 +112,7 @@ app.post('/submit-form', async (req, res) => {
           equipment,
           liftNum: data.liftNum,
           hour: data.hour,
-          liftDate: createUTCDate(data.date), // USE HELPER
+          liftDate: createUTCDate(data.date), 
           notes: data.notes,
           fixedBy: data.fixedBy,
           solution: data.solution
@@ -105,7 +123,7 @@ app.post('/submit-form', async (req, res) => {
         return res.status(400).send("Unknown equipment type");
     }
 
-    const doc = new equipmentModel(mappedData);a
+    const doc = new equipmentModel(mappedData);
     await doc.save();
 
     console.log(`Inserted into ${collectionName} collection:`, mappedData);
@@ -195,34 +213,7 @@ app.get('/get_shuttles', async (req,res) => {
   }
 });
 
-app.post('/submit-message', async (req,res) => {
 
-  try{
-
-  const {importance, technician, message} = req.body;
-
-  if (!importance || !technician || !message) {
-  return res.status(404).send("Missing Required Fields!");
-  }
-
-  const new_message = new Message({
-    technician,
-    message,
-    importance,
-    createdAt: new Date()
-  })
-
-  await new_message.save();
-
-  console.log("Message Saved Succefully!");
-  res.send("Message was Succusfully Saved!")
-
-  } catch (err){
-    console.error("Failed to Insert Message!", err);
-    res.status(505).send("Failed to Insert Data!");
-  }
-
-});
 
 app.get('/get_AGVS', async (req, res) => {
 
@@ -236,6 +227,52 @@ app.get('/get_AGVS', async (req, res) => {
   }
 
 });
+
+app.post('/submit-message', async (req, res) => {
+  try {
+    const { message, technician, importance } = req.body;
+
+    if (!message || !technician || !importance) {
+      return res.status(400).send("Missing required fields");
+    }
+
+    const newMessage = new Message({
+      message,
+      technician,
+      importance
+    });
+
+    await newMessage.save();
+
+    res.json({ success: true, msg: "Message saved" });
+  } catch (err) {
+    console.error("Error saving message:", err);
+    res.status(500).send("Failed to save message");
+  }
+});
+
+app.get('/get-messages', async (req, res) => {
+  try {
+    const messages = await Message.find().sort({ createdAt: -1 }).limit(4).lean();
+    res.json(messages);
+  } catch (err) {
+    console.error("Error fetching messages:", err);
+    res.status(500).send("Failed to fetch messages");
+  }
+});
+
+app.delete('/delete-message/:id', async (req, res) => {
+  try {
+    const { id } = req.params;
+    await Message.findByIdAndDelete(id);
+    res.json({ success: true });
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to delete message");
+  }
+});
+
+
 
 app.listen(port, () => {
   console.log("Server Running on 3000");

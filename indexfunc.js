@@ -4,6 +4,9 @@ function formatDate(date) {
   return d.toLocaleDateString();
 }
 
+//fetch latest issues from MongoDB Collection, use rednerIssues inside. 
+
+
 async function fetchLatestHistory(equipment) {
   try {
     const res = await fetch('/get-history', {
@@ -37,6 +40,9 @@ async function fetchLatestHistory(equipment) {
   }
 }
 
+//show latest issues.
+
+
 function renderLatestIssues(issues) {
   const list = document.getElementById('issues');
   list.innerHTML = ''; 
@@ -53,6 +59,73 @@ function renderLatestIssues(issues) {
   });
 }
 
+
+//fetch messages, and display onto index main screen, if no messages to display, show No Massages.
+
+async function fetchLatestMessages() {
+  const res = await fetch('/get-messages');
+  const data = await res.json();
+
+  const list = document.getElementById('messages');
+
+  list.innerHTML = '';
+
+    if (!data || data.length === 0) {
+    const li = document.createElement('li');
+    li.className = 'list-group-item text-center text-muted';
+    li.textContent = 'Currently No Massages';
+    list.appendChild(li);
+    return; 
+  }
+  
+  data.forEach(m => {
+  const li = document.createElement('li');
+  li.className = 'list-group-item border rounded-3 mb-2 text-center';
+  li.dataset.id = m._id; 
+
+  li.innerHTML = `
+    <div class="fw-semibold">From: ${m.technician}</div>
+    <div class="text-muted small">Message: ${m.message}</div>
+    <span class="badge bg-danger-subtle text-danger mt-2">Importance: ${m.importance}</span>
+    <br>
+    <button type="button" class="btn btn-danger rounded-circle d-flex align-items-center justify-content-center mx-auto mt-2" style="width:40px; height:40px; padding:0;">✓</button>
+  `;
+
+    const button = li.querySelector('button');
+    button.addEventListener('click', async () => {
+    const messageId = li.dataset.id;
+
+    const res = await fetch(`/delete-message/${messageId}`, { method: 'DELETE' });
+
+    if (res.ok) {
+      li.remove(); 
+    } else {
+      alert('Failed to delete message');
+    }
+  });
+
+  list.appendChild(li);
+});
+
+}
+
+//
+
+async function submitMessage(message, technician, importance) {
+  const res = await fetch('/submit-message', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ message, technician, importance })
+  });
+
+  if (res.ok) {
+    fetchLatestMessages();
+  }
+}
+
+//call functions.
+
 document.addEventListener('DOMContentLoaded', () => {
   fetchLatestHistory('Shuttle'); 
+  fetchLatestMessages();
 });
