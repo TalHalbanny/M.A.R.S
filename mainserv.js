@@ -6,11 +6,92 @@ const path = require('path');
 const bodyparser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
+const { spawn } = require('child_process');
 
 //connect and declare port number
 
 const port = 3000; 
 const app = express(); 
+
+//extract data from JSON that is updated from python script
+
+const shuttleJsonPath = path.join(__dirname, 'shuttle_data.json'); 
+let shuttleData = [];
+
+// Preload shuttleData at startup if file exists
+try {
+  if (fs.existsSync(shuttleJsonPath)) {
+    const json = fs.readFileSync(shuttleJsonPath, 'utf8');
+    shuttleData = JSON.parse(json);
+    console.log(`Preloaded shuttleData: ${shuttleData.length} records`);
+  }
+} catch (err) {
+  console.error("Failed to preload shuttle_data.json:", err.message);
+}
+
+// Function to update shuttleData by running the Python scraper
+function updateShuttleData() {
+  const pythonScript = path.join(__dirname, 'scarpper_v1.py'); 
+
+  console.log("Running Python scraper...");
+
+  const python = spawn('python', [pythonScript]);
+
+  python.stdout.on('data', (data) => {
+    console.log(`Python output: ${data.toString()}`);
+  });
+
+  python.stderr.on('data', (data) => {
+    console.error(`Python error: ${data.toString()}`);
+  });
+
+  python.on('close', (code) => {
+    console.log(`Python exited with code ${code}`);
+    
+    // Read JSON after Python script finishes
+    fs.readFile(shuttleJsonPath, 'utf8', (err, json) => {
+      if (err) {
+        console.error("Error reading shuttle_data.json:", err.message);
+        return;
+      }
+
+      try {
+        const parsed = JSON.parse(json);
+
+        if (!Array.isArray(parsed)) {
+          console.error("shuttle_data.json does not contain an array:", parsed);
+          return;
+        }
+
+        shuttleData = parsed;
+        console.log(`shuttleData updated: ${shuttleData.length} records`);
+      } catch (parseErr) {
+        console.error("Error parsing shuttle_data.json:", parseErr.message);
+      }
+    });
+  });
+}
+
+// API endpoint to always serve latest shuttleData
+app.get('/api/shuttles', (req, res) => {
+  // Optionally, read directly from file every time
+  fs.readFile(shuttleJsonPath, 'utf8', (err, json) => {
+    if (err) {
+      console.error("Failed to read shuttle data:", err.message);
+      return res.status(500).send("Failed to read shuttle data");
+    }
+
+    try {
+      const data = JSON.parse(json);
+      res.json(data);
+    } catch (e) {
+      console.error("Invalid JSON:", e.message);
+      res.status(500).send("Invalid shuttle data JSON");
+    }
+  });
+});
+
+
 
 //use body parser for requests and app.use for path declaration.
 
@@ -172,10 +253,10 @@ app.post('/get-history', async (req, res) => {
 
  
 
-    console.log("Mongo query:", query); // Good for debugging
+    console.log("Mongo query:", query); 
 
     const docs = await equipmentModel.find(query).sort({ [dateField]: -1 }).lean();
-    console.log("Fetched docs:", docs); // Good for debugging
+    console.log("Fetched docs:", docs); 
 
     res.json(docs);
     
@@ -261,6 +342,14 @@ app.get('/get-messages', async (req, res) => {
   }
 });
 
+app.get('/shuttles', (req, res) => {
+  res.sendFile(path.join(__dirname, 'shuttle_stat.html'));
+});
+
+app.get('/api/shuttles', (req, res) => {
+  res.json(shuttleData); 
+});
+
 app.delete('/delete-message/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -272,6 +361,10 @@ app.delete('/delete-message/:id', async (req, res) => {
   }
 });
 
+//run scrapper on a timer interval
+
+updateShuttleData();
+setInterval(updateShuttleData, 30000);
 
 
 app.listen(port, () => {

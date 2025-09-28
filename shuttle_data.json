@@ -1,0 +1,513 @@
+[
+  {
+    "Shuttle": "1",
+    "Level": "12",
+    "Aisle": "1",
+    "Status": "ready",
+    "IP": "10.1.11.11/4002"
+  },
+  {
+    "Shuttle": "2",
+    "Level": "5",
+    "Aisle": "1",
+    "Status": "Task in Progress",
+    "IP": "10.1.11.12/4002"
+  },
+  {
+    "Shuttle": "3",
+    "Level": "16",
+    "Aisle": "1",
+    "Status": "ready",
+    "IP": "10.1.11.13/4002"
+  },
+  {
+    "Shuttle": "4",
+    "Level": "15",
+    "Aisle": "1",
+    "Status": "Task in Progress",
+    "IP": "10.1.11.14/4002"
+  },
+  {
+    "Shuttle": "5",
+    "Level": "2",
+    "Aisle": "2",
+    "Status": "ready",
+    "IP": "10.1.11.15/4002"
+  },
+  {
+    "Shuttle": "6",
+    "Level": "7",
+    "Aisle": "2",
+    "Status": "ready",
+    "IP": "10.1.11.16/4002"
+  },
+  {
+    "Shuttle": "7",
+    "Level": "3",
+    "Aisle": "2",
+    "Status": "ready",
+    "IP": "10.1.11.17/4002"
+  },
+  {
+    "Shuttle": "8",
+    "Level": "14",
+    "Aisle": "3",
+    "Status": "run",
+    "IP": "10.1.11.18/4002"
+  },
+  {
+    "Shuttle": "9",
+    "Level": "4",
+    "Aisle": "3",
+    "Status": "Task in Progress",
+    "IP": "10.1.11.19/4002"
+  },
+  {
+    "Shuttle": "10",
+    "Level": "9",
+    "Aisle": "3",
+    "Status": "Task in Progress",
+    "IP": "10.1.11.20/4002"
+  },
+  {
+    "Shuttle": "11",
+    "Level": "10",
+    "Aisle": "3",
+    "Status": "Task in Progress",
+    "IP": "10.1.11.21/4002"
+  },
+  {
+    "Shuttle": "12",
+    "Level": "8",
+    "Aisle": "3",
+    "Status": "ready",
+    "IP": "10.1.11.22/4002"
+  },
+  {
+    "Shuttle": "13",
+    "Level": "11",
+    "Aisle": "3",
+    "Status": "ready",
+    "IP": "10.1.11.23/4002"
+  },
+  {
+    "Shuttle": "14",
+    "Level": "5",
+    "Aisle": "4",
+    "Status": "ready",
+    "IP": "10.1.11.24/4002"
+  },
+  {
+    "Shuttle": "15",
+    "Level": "12",
+    "Aisle": "4",
+    "Status": "ready",
+    "IP": "10.1.11.25/4002"
+  },
+  {
+    "Shuttle": "16",
+    "Level": "3",
+    "Aisle": "4",
+    "Status": "ready",
+    "IP": "10.1.11.26/4002"
+  },
+  {
+    "Shuttle": "17",
+    "Level": "4",
+    "Aisle": "4",
+    "Status": "ready",
+    "IP": "10.1.11.27/4002"
+  },
+  {
+    "Shuttle": "18",
+    "Level": "11",
+    "Aisle": "4",
+    "Status": "ready",
+    "IP": "10.1.11.28/4002"
+  },
+  {
+    "Shuttle": "19",
+    "Level": "6",
+    "Aisle": "4",
+    "Status": "ready",
+    "IP": "10.1.11.29/4002"
+  },
+  {
+    "Shuttle": "20",
+    "Level": "1",
+    "Aisle": "5",
+    "Status": "ready",
+    "IP": "10.1.11.30/4002"
+  },
+  {
+    "Shuttle": "21",
+    "Level": "16",
+    "Aisle": "5",
+    "Status": "Waiting for the inbound",
+    "IP": "10.1.11.31/4002"
+  },
+  {
+    "Shuttle": "22",
+    "Level": "4",
+    "Aisle": "5",
+    "Status": "ready",
+    "IP": "10.1.11.32/4002"
+  },
+  {
+    "Shuttle": "23",
+    "Level": "6",
+    "Aisle": "5",
+    "Status": "ready",
+    "IP": "10.1.11.33/4002"
+  },
+  {
+    "Shuttle": "24",
+    "Level": "2",
+    "Aisle": "5",
+    "Status": "ready",
+    "IP": "10.1.11.34/4002"
+  },
+  {
+    "Shuttle": "25",
+    "Level": "14",
+    "Aisle": "5",
+    "Status": "run",
+    "IP": "10.1.11.35/4002"
+  },
+  {
+    "Shuttle": "26",
+    "Level": "7",
+    "Aisle": "5",
+    "Status": "ready",
+    "IP": "10.1.11.36/4002"
+  },
+  {
+    "Shuttle": "27",
+    "Level": "3",
+    "Aisle": "5",
+    "Status": "Task in Progress",
+    "IP": "10.1.11.37/4002"
+  },
+  {
+    "Shuttle": "28",
+    "Level": "3",
+    "Aisle": "6",
+    "Status": "ready",
+    "IP": "10.1.11.38/4002"
+  },
+  {
+    "Shuttle": "29",
+    "Level": "14",
+    "Aisle": "6",
+    "Status": "ready",
+    "IP": "10.1.11.39/4002"
+  },
+  {
+    "Shuttle": "30",
+    "Level": "4",
+    "Aisle": "6",
+    "Status": "ready",
+    "IP": "10.1.11.40/4002"
+  },
+  {
+    "Shuttle": "31",
+    "Level": "12",
+    "Aisle": "6",
+    "Status": "Task in Progress",
+    "IP": "10.1.11.41/4002"
+  },
+  {
+    "Shuttle": "32",
+    "Level": "2",
+    "Aisle": "6",
+    "Status": "ready",
+    "IP": "10.1.11.42/4002"
+  },
+  {
+    "Shuttle": "33",
+    "Level": "11",
+    "Aisle": "6",
+    "Status": "ready",
+    "IP": "10.1.11.43/4002"
+  },
+  {
+    "Shuttle": "34",
+    "Level": "16",
+    "Aisle": "6",
+    "Status": "ready",
+    "IP": "10.1.11.44/4002"
+  },
+  {
+    "Shuttle": "35",
+    "Level": "1",
+    "Aisle": "6",
+    "Status": "ready",
+    "IP": "10.1.11.45/4002"
+  },
+  {
+    "Shuttle": "36",
+    "Level": "15",
+    "Aisle": "7",
+    "Status": "run",
+    "IP": "10.1.11.46/4002"
+  },
+  {
+    "Shuttle": "37",
+    "Level": "2",
+    "Aisle": "7",
+    "Status": "ready",
+    "IP": "10.1.11.47/4002"
+  },
+  {
+    "Shuttle": "38",
+    "Level": "5",
+    "Aisle": "7",
+    "Status": "ready",
+    "IP": "10.1.11.48/4002"
+  },
+  {
+    "Shuttle": "39",
+    "Level": "1",
+    "Aisle": "7",
+    "Status": "Task in Progress",
+    "IP": "10.1.11.49/4002"
+  },
+  {
+    "Shuttle": "40",
+    "Level": "14",
+    "Aisle": "7",
+    "Status": "ready",
+    "IP": "10.1.11.50/4002"
+  },
+  {
+    "Shuttle": "41",
+    "Level": "12",
+    "Aisle": "7",
+    "Status": "ready",
+    "IP": "10.1.11.51/4002"
+  },
+  {
+    "Shuttle": "42",
+    "Level": "13",
+    "Aisle": "7",
+    "Status": "complete",
+    "IP": "10.1.11.52/4002"
+  },
+  {
+    "Shuttle": "43",
+    "Level": "3",
+    "Aisle": "7",
+    "Status": "ready",
+    "IP": "10.1.11.53/4002"
+  },
+  {
+    "Shuttle": "44",
+    "Level": "15",
+    "Aisle": "8",
+    "Status": "run",
+    "IP": "10.1.11.54/4002"
+  },
+  {
+    "Shuttle": "45",
+    "Level": "6",
+    "Aisle": "8",
+    "Status": "run",
+    "IP": "10.1.11.55/4002"
+  },
+  {
+    "Shuttle": "46",
+    "Level": "1",
+    "Aisle": "8",
+    "Status": "run",
+    "IP": "10.1.11.56/4002"
+  },
+  {
+    "Shuttle": "47",
+    "Level": "7",
+    "Aisle": "8",
+    "Status": "ready",
+    "IP": "10.1.11.57/4002"
+  },
+  {
+    "Shuttle": "48",
+    "Level": "14",
+    "Aisle": "8",
+    "Status": "run",
+    "IP": "10.1.11.58/4002"
+  },
+  {
+    "Shuttle": "49",
+    "Level": "2",
+    "Aisle": "8",
+    "Status": "ready",
+    "IP": "10.1.11.59/4002"
+  },
+  {
+    "Shuttle": "50",
+    "Level": "4",
+    "Aisle": "8",
+    "Status": "ready",
+    "IP": "10.1.11.60/4002"
+  },
+  {
+    "Shuttle": "51",
+    "Level": "13",
+    "Aisle": "8",
+    "Status": "ready",
+    "IP": "10.1.11.61/4002"
+  },
+  {
+    "Shuttle": "52",
+    "Level": "6",
+    "Aisle": "9",
+    "Status": "ready",
+    "IP": "10.1.11.62/4002"
+  },
+  {
+    "Shuttle": "53",
+    "Level": "15",
+    "Aisle": "9",
+    "Status": "Task in Progress",
+    "IP": "10.1.11.63/4002"
+  },
+  {
+    "Shuttle": "54",
+    "Level": "5",
+    "Aisle": "9",
+    "Status": "ready",
+    "IP": "10.1.11.64/4002"
+  },
+  {
+    "Shuttle": "55",
+    "Level": "2",
+    "Aisle": "9",
+    "Status": "ready",
+    "IP": "10.1.11.65/4002"
+  },
+  {
+    "Shuttle": "56",
+    "Level": "8",
+    "Aisle": "9",
+    "Status": "ready",
+    "IP": "10.1.11.66/4002"
+  },
+  {
+    "Shuttle": "57",
+    "Level": "14",
+    "Aisle": "9",
+    "Status": "ready",
+    "IP": "10.1.11.67/4002"
+  },
+  {
+    "Shuttle": "58",
+    "Level": "18",
+    "Aisle": "9",
+    "Status": "ready",
+    "IP": "10.1.11.68/4002"
+  },
+  {
+    "Shuttle": "59",
+    "Level": "13",
+    "Aisle": "9",
+    "Status": "ready",
+    "IP": "10.1.11.69/4002"
+  },
+  {
+    "Shuttle": "60",
+    "Level": "13",
+    "Aisle": "3",
+    "Status": "run",
+    "IP": "10.1.11.70/4002"
+  },
+  {
+    "Shuttle": "61",
+    "Level": "6",
+    "Aisle": "3",
+    "Status": "ready",
+    "IP": "10.1.11.71/4002"
+  },
+  {
+    "Shuttle": "62",
+    "Level": "12",
+    "Aisle": "3",
+    "Status": "ready",
+    "IP": "10.1.11.72/4002"
+  },
+  {
+    "Shuttle": "63",
+    "Level": "10",
+    "Aisle": "1",
+    "Status": "ready",
+    "IP": "10.1.11.73/4002"
+  },
+  {
+    "Shuttle": "64",
+    "Level": "15",
+    "Aisle": "1",
+    "Status": "ready",
+    "IP": "10.1.11.74/4002"
+  },
+  {
+    "Shuttle": "65",
+    "Level": "13",
+    "Aisle": "1",
+    "Status": "ready",
+    "IP": "10.1.11.75/4002"
+  },
+  {
+    "Shuttle": "66",
+    "Level": "5",
+    "Aisle": "1",
+    "Status": "ready",
+    "IP": "10.1.11.76/4002"
+  },
+  {
+    "Shuttle": "67",
+    "Level": "5",
+    "Aisle": "11",
+    "Status": "ready",
+    "IP": "10.1.11.77/4002"
+  },
+  {
+    "Shuttle": "68",
+    "Level": "3",
+    "Aisle": "11",
+    "Status": "ready",
+    "IP": "10.1.11.78/4002"
+  },
+  {
+    "Shuttle": "69",
+    "Level": "8",
+    "Aisle": "11",
+    "Status": "ready",
+    "IP": "10.1.11.79/4002"
+  },
+  {
+    "Shuttle": "70",
+    "Level": "7",
+    "Aisle": "11",
+    "Status": "ready",
+    "IP": "10.1.11.80/4002"
+  },
+  {
+    "Shuttle": "71",
+    "Level": "6",
+    "Aisle": "11",
+    "Status": "ready",
+    "IP": "10.1.11.81/4002"
+  },
+  {
+    "Shuttle": "72",
+    "Level": "1",
+    "Aisle": "11",
+    "Status": "ready",
+    "IP": "10.1.11.82/4002"
+  },
+  {
+    "Shuttle": "73",
+    "Level": "2",
+    "Aisle": "11",
+    "Status": "ready",
+    "IP": "10.1.11.83/4002"
+  }
+]
