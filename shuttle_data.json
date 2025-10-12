@@ -1,16 +1,16 @@
 [
     {
         "Shuttle": "1",
-        "Level": "9",
+        "Level": "16",
         "Aisle": "1",
         "Status": "ready",
         "IP": "10.1.11.11/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396018"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "2",
-        "Level": "6",
+        "Level": "2",
         "Aisle": "1",
         "Status": "ready",
         "IP": "10.1.11.12/4002",
@@ -19,7 +19,7 @@
     },
     {
         "Shuttle": "3",
-        "Level": "14",
+        "Level": "1",
         "Aisle": "1",
         "Status": "ready",
         "IP": "10.1.11.13/4002",
@@ -28,16 +28,16 @@
     },
     {
         "Shuttle": "4",
-        "Level": "1",
+        "Level": "6",
         "Aisle": "1",
         "Status": "ready",
         "IP": "10.1.11.14/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "N/A"
+        "TaskNoLink": "http://10.0.0.103/#/Transports1#1397396"
     },
     {
         "Shuttle": "5",
-        "Level": "1",
+        "Level": "5",
         "Aisle": "2",
         "Status": "ready",
         "IP": "10.1.11.15/4002",
@@ -46,7 +46,7 @@
     },
     {
         "Shuttle": "6",
-        "Level": "6",
+        "Level": "3",
         "Aisle": "2",
         "Status": "ready",
         "IP": "10.1.11.16/4002",
@@ -55,7 +55,7 @@
     },
     {
         "Shuttle": "7",
-        "Level": "8",
+        "Level": "9",
         "Aisle": "2",
         "Status": "ready",
         "IP": "10.1.11.17/4002",
@@ -64,25 +64,25 @@
     },
     {
         "Shuttle": "8",
-        "Level": "1",
+        "Level": "13",
         "Aisle": "3",
         "Status": "ready",
         "IP": "10.1.11.18/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396044"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "9",
-        "Level": "13",
+        "Level": "11",
         "Aisle": "3",
         "Status": "ready",
         "IP": "10.1.11.19/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396022"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "10",
-        "Level": "14",
+        "Level": "3",
         "Aisle": "3",
         "Status": "ready",
         "IP": "10.1.11.20/4002",
@@ -91,7 +91,7 @@
     },
     {
         "Shuttle": "11",
-        "Level": "12",
+        "Level": "9",
         "Aisle": "3",
         "Status": "ready",
         "IP": "10.1.11.21/4002",
@@ -100,21 +100,21 @@
     },
     {
         "Shuttle": "12",
-        "Level": "4",
+        "Level": "2",
         "Aisle": "3",
         "Status": "ready",
         "IP": "10.1.11.22/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396021"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "13",
-        "Level": "9",
+        "Level": "4",
         "Aisle": "3",
         "Status": "ready",
         "IP": "10.1.11.23/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396010"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "14",
@@ -123,7 +123,7 @@
         "Status": "ready",
         "IP": "10.1.11.24/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396043"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "15",
@@ -136,7 +136,7 @@
     },
     {
         "Shuttle": "16",
-        "Level": "11",
+        "Level": "3",
         "Aisle": "4",
         "Status": "ready",
         "IP": "10.1.11.26/4002",
@@ -145,7 +145,7 @@
     },
     {
         "Shuttle": "17",
-        "Level": "6",
+        "Level": "1",
         "Aisle": "4",
         "Status": "ready",
         "IP": "10.1.11.27/4002",
@@ -163,7 +163,7 @@
     },
     {
         "Shuttle": "19",
-        "Level": "9",
+        "Level": "4",
         "Aisle": "4",
         "Status": "ready",
         "IP": "10.1.11.29/4002",
@@ -172,16 +172,16 @@
     },
     {
         "Shuttle": "20",
-        "Level": "12",
+        "Level": "4",
         "Aisle": "5",
-        "Status": "Task in Progress",
+        "Status": "ready",
         "IP": "10.1.11.30/4002",
-        "ExecutionPhase": "Being put",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395727"
+        "ExecutionPhase": "No Current Phase",
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "21",
-        "Level": "11",
+        "Level": "16",
         "Aisle": "5",
         "Status": "ready",
         "IP": "10.1.11.31/4002",
@@ -190,7 +190,7 @@
     },
     {
         "Shuttle": "22",
-        "Level": "4",
+        "Level": "15",
         "Aisle": "5",
         "Status": "ready",
         "IP": "10.1.11.32/4002",
@@ -199,7 +199,7 @@
     },
     {
         "Shuttle": "23",
-        "Level": "8",
+        "Level": "6",
         "Aisle": "5",
         "Status": "ready",
         "IP": "10.1.11.33/4002",
@@ -208,7 +208,7 @@
     },
     {
         "Shuttle": "24",
-        "Level": "5",
+        "Level": "1",
         "Aisle": "5",
         "Status": "ready",
         "IP": "10.1.11.34/4002",
@@ -217,7 +217,7 @@
     },
     {
         "Shuttle": "25",
-        "Level": "14",
+        "Level": "17",
         "Aisle": "5",
         "Status": "ready",
         "IP": "10.1.11.35/4002",
@@ -226,7 +226,7 @@
     },
     {
         "Shuttle": "26",
-        "Level": "16",
+        "Level": "5",
         "Aisle": "5",
         "Status": "ready",
         "IP": "10.1.11.36/4002",
@@ -235,7 +235,7 @@
     },
     {
         "Shuttle": "27",
-        "Level": "1",
+        "Level": "12",
         "Aisle": "5",
         "Status": "ready",
         "IP": "10.1.11.37/4002",
@@ -249,11 +249,11 @@
         "Status": "ready",
         "IP": "10.1.11.38/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396012"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "29",
-        "Level": "13",
+        "Level": "1",
         "Aisle": "6",
         "Status": "ready",
         "IP": "10.1.11.39/4002",
@@ -262,7 +262,7 @@
     },
     {
         "Shuttle": "30",
-        "Level": "9",
+        "Level": "6",
         "Aisle": "6",
         "Status": "ready",
         "IP": "10.1.11.40/4002",
@@ -276,11 +276,11 @@
         "Status": "ready",
         "IP": "10.1.11.41/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396050"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "32",
-        "Level": "5",
+        "Level": "16",
         "Aisle": "6",
         "Status": "ready",
         "IP": "10.1.11.42/4002",
@@ -289,16 +289,16 @@
     },
     {
         "Shuttle": "33",
-        "Level": "12",
+        "Level": "2",
         "Aisle": "6",
         "Status": "ready",
         "IP": "10.1.11.43/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395737"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "34",
-        "Level": "3",
+        "Level": "12",
         "Aisle": "6",
         "Status": "ready",
         "IP": "10.1.11.44/4002",
@@ -312,47 +312,47 @@
         "Status": "ready",
         "IP": "10.1.11.45/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395898"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "36",
-        "Level": "12",
+        "Level": "13",
         "Aisle": "7",
         "Status": "ready",
         "IP": "10.1.11.46/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395850"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "37",
         "Level": "6",
         "Aisle": "7",
-        "Status": "run",
+        "Status": "ready",
         "IP": "10.1.11.47/4002",
-        "ExecutionPhase": "Release cargo to walk",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395919"
+        "ExecutionPhase": "No Current Phase",
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "38",
-        "Level": "17",
+        "Level": "8",
         "Aisle": "7",
         "Status": "ready",
         "IP": "10.1.11.48/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395942"
+        "TaskNoLink": "http://10.0.0.103/#/Transports1#1397403"
     },
     {
         "Shuttle": "39",
-        "Level": "8",
+        "Level": "18",
         "Aisle": "7",
         "Status": "ready",
         "IP": "10.1.11.49/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395890"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "40",
-        "Level": "16",
+        "Level": "14",
         "Aisle": "7",
         "Status": "ready",
         "IP": "10.1.11.50/4002",
@@ -361,25 +361,25 @@
     },
     {
         "Shuttle": "41",
-        "Level": "1",
+        "Level": "12",
         "Aisle": "7",
         "Status": "ready",
         "IP": "10.1.11.51/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395974"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "42",
-        "Level": "9",
+        "Level": "15",
         "Aisle": "7",
         "Status": "ready",
         "IP": "10.1.11.52/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395985"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "43",
-        "Level": "13",
+        "Level": "5",
         "Aisle": "7",
         "Status": "ready",
         "IP": "10.1.11.53/4002",
@@ -388,61 +388,61 @@
     },
     {
         "Shuttle": "44",
-        "Level": "13",
+        "Level": "5",
         "Aisle": "8",
         "Status": "ready",
         "IP": "10.1.11.54/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396054"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "45",
-        "Level": "12",
+        "Level": "13",
         "Aisle": "8",
-        "Status": "run",
+        "Status": "ready",
         "IP": "10.1.11.55/4002",
-        "ExecutionPhase": "Release cargo to walk",
+        "ExecutionPhase": "No Current Phase",
         "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "46",
-        "Level": "5",
+        "Level": "8",
         "Aisle": "8",
         "Status": "ready",
         "IP": "10.1.11.56/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396057"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "47",
-        "Level": "18",
+        "Level": "7",
         "Aisle": "8",
         "Status": "ready",
         "IP": "10.1.11.57/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396011"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "48",
-        "Level": "15",
+        "Level": "6",
         "Aisle": "8",
         "Status": "ready",
         "IP": "10.1.11.58/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396017"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "49",
-        "Level": "11",
+        "Level": "14",
         "Aisle": "8",
         "Status": "ready",
         "IP": "10.1.11.59/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396041"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "50",
-        "Level": "1",
+        "Level": "4",
         "Aisle": "8",
         "Status": "ready",
         "IP": "10.1.11.60/4002",
@@ -451,25 +451,25 @@
     },
     {
         "Shuttle": "51",
-        "Level": "3",
+        "Level": "2",
         "Aisle": "8",
         "Status": "ready",
         "IP": "10.1.11.61/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396038"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "52",
-        "Level": "5",
+        "Level": "15",
         "Aisle": "9",
         "Status": "ready",
         "IP": "10.1.11.62/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396002"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "53",
-        "Level": "6",
+        "Level": "4",
         "Aisle": "9",
         "Status": "ready",
         "IP": "10.1.11.63/4002",
@@ -480,9 +480,9 @@
         "Shuttle": "54",
         "Level": "16",
         "Aisle": "9",
-        "Status": "run",
+        "Status": "ready",
         "IP": "10.1.11.64/4002",
-        "ExecutionPhase": "Pickup walk",
+        "ExecutionPhase": "No Current Phase",
         "TaskNoLink": "N/A"
     },
     {
@@ -505,16 +505,16 @@
     },
     {
         "Shuttle": "57",
-        "Level": "17",
+        "Level": "1",
         "Aisle": "9",
         "Status": "ready",
         "IP": "10.1.11.67/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1396051"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "58",
-        "Level": "15",
+        "Level": "11",
         "Aisle": "9",
         "Status": "ready",
         "IP": "10.1.11.68/4002",
@@ -523,7 +523,7 @@
     },
     {
         "Shuttle": "59",
-        "Level": "1",
+        "Level": "2",
         "Aisle": "9",
         "Status": "ready",
         "IP": "10.1.11.69/4002",
@@ -532,7 +532,7 @@
     },
     {
         "Shuttle": "60",
-        "Level": "7",
+        "Level": "14",
         "Aisle": "3",
         "Status": "ready",
         "IP": "10.1.11.70/4002",
@@ -541,7 +541,7 @@
     },
     {
         "Shuttle": "61",
-        "Level": "6",
+        "Level": "12",
         "Aisle": "3",
         "Status": "ready",
         "IP": "10.1.11.71/4002",
@@ -550,7 +550,7 @@
     },
     {
         "Shuttle": "62",
-        "Level": "5",
+        "Level": "6",
         "Aisle": "3",
         "Status": "ready",
         "IP": "10.1.11.72/4002",
@@ -564,20 +564,20 @@
         "Status": "ready",
         "IP": "10.1.11.73/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395999"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "64",
-        "Level": "10",
+        "Level": "11",
         "Aisle": "4",
-        "Status": "Task in Progress",
+        "Status": "ready",
         "IP": "10.1.11.74/4002",
-        "ExecutionPhase": "Being put",
+        "ExecutionPhase": "No Current Phase",
         "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "65",
-        "Level": "8",
+        "Level": "10",
         "Aisle": "4",
         "Status": "ready",
         "IP": "10.1.11.75/4002",
@@ -586,7 +586,7 @@
     },
     {
         "Shuttle": "66",
-        "Level": "9",
+        "Level": "2",
         "Aisle": "2",
         "Status": "ready",
         "IP": "10.1.11.76/4002",
@@ -595,7 +595,7 @@
     },
     {
         "Shuttle": "67",
-        "Level": "2",
+        "Level": "13",
         "Aisle": "6",
         "Status": "ready",
         "IP": "10.1.11.77/4002",
@@ -604,7 +604,7 @@
     },
     {
         "Shuttle": "68",
-        "Level": "18",
+        "Level": "10",
         "Aisle": "7",
         "Status": "ready",
         "IP": "10.1.11.78/4002",
@@ -622,7 +622,7 @@
     },
     {
         "Shuttle": "70",
-        "Level": "3",
+        "Level": "2",
         "Aisle": "4",
         "Status": "ready",
         "IP": "10.1.11.80/4002",
@@ -631,7 +631,7 @@
     },
     {
         "Shuttle": "71",
-        "Level": "2",
+        "Level": "3",
         "Aisle": "5",
         "Status": "ready",
         "IP": "10.1.11.81/4002",
@@ -640,12 +640,12 @@
     },
     {
         "Shuttle": "72",
-        "Level": "13",
+        "Level": "5",
         "Aisle": "9",
         "Status": "ready",
         "IP": "10.1.11.82/4002",
         "ExecutionPhase": "No Current Phase",
-        "TaskNoLink": "http://10.0.0.103/#/Transports1#1395983"
+        "TaskNoLink": "N/A"
     },
     {
         "Shuttle": "73",

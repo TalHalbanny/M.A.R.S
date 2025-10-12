@@ -34,7 +34,9 @@ const templates = {
       <label class="form-label" for="shuttleFixedBy">Fixed By</label>
       <select class="form-select" id="shuttleFixedBy" name="fixedBy" required>
         <option value="" disabled selected>Select technician...</option>
-        <option value="Leonid Goz">Leonid Goz</option>
+        <option value="Maxim Derevyankin">Maxim Derevyankin</option>
+        <option value="Kiril Rozet">Kiril Rozet</option>
+        <option value="Daniel Mirzayev">Daniel Mirzayev</option>
         <option value="Tal Halbanny">Tal Halbanny</option>
         <option value="Pavel Tishkov">Pavel Tishkov</option>
       </select>
@@ -65,9 +67,11 @@ const templates = {
     </div>
     <div class="mb-3">
       <label class="form-label" for="agvFixedBy">Fixed By</label>
-      <select class="form-select" id="agvFixedBy" name="fixedBy" required>
+      <select class="form-select" id="shuttleFixedBy" name="fixedBy" required>
         <option value="" disabled selected>Select technician...</option>
-        <option value="Leonid Goz">Leonid Goz</option>
+        <option value="Maxim Derevyankin">Maxim Derevyankin</option>
+        <option value="Kiril Rozet">Kiril Rozet</option>
+        <option value="Daniel Mirzayev">Daniel Mirzayev</option>
         <option value="Tal Halbanny">Tal Halbanny</option>
         <option value="Pavel Tishkov">Pavel Tishkov</option>
       </select>
@@ -101,12 +105,14 @@ const templates = {
         </div>
         <div class="mb-3">
           <label class="form-label" for="rgvFixedBy">Fixed By</label>
-          <select class="form-select" id="rgvFixedBy" name="fixedBy" required>
-            <option value="" disabled selected>Select technician...</option>
-            <option value="Leonid Goz">Leonid Goz</option>
-            <option value="Tal Halbanny">Tal Halbanny</option>
-            <option value="Pavel Tishkov">Pavel Tishkov</option>
-          </select>
+      <select class="form-select" id="shuttleFixedBy" name="fixedBy" required>
+        <option value="" disabled selected>Select technician...</option>
+        <option value="Maxim Derevyankin">Maxim Derevyankin</option>
+        <option value="Kiril Rozet">Kiril Rozet</option>
+        <option value="Daniel Mirzayev">Daniel Mirzayev</option>
+        <option value="Tal Halbanny">Tal Halbanny</option>
+        <option value="Pavel Tishkov">Pavel Tishkov</option>
+      </select>
         </div>
         <div class="mb-3">
           <label class="form-label" for="rgvSolution">Solution Made for Issue</label>
@@ -147,12 +153,14 @@ const templates = {
         </div>
         <div class="mb-3">
           <label class="form-label" for="liftFixedBy">Fixed By</label>
-          <select class="form-select" id="liftFixedBy" name="fixedBy" required>
-            <option value="" disabled selected>Select technician...</option>
-            <option value="Leonid Goz">Leonid Goz</option>
-            <option value="Tal Halbanny">Tal Halbanny</option>
-            <option value="Pavel Tishkov">Pavel Tishkov</option>
-          </select>
+        <select class="form-select" id="shuttleFixedBy" name="fixedBy" required>
+        <option value="" disabled selected>Select technician...</option>
+        <option value="Maxim Derevyankin">Maxim Derevyankin</option>
+        <option value="Kiril Rozet">Kiril Rozet</option>
+        <option value="Daniel Mirzayev">Daniel Mirzayev</option>
+        <option value="Tal Halbanny">Tal Halbanny</option>
+        <option value="Pavel Tishkov">Pavel Tishkov</option>
+        </select>
         </div>
         <div class="mb-3">
           <label class="form-label" for="liftSolution">Solution Made for Issue</label>
