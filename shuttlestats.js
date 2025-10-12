@@ -56,7 +56,7 @@ async function loadShuttles() {
     col.className = 'col-md-2';
 
     const status = s.Status.toLowerCase().trim();
-    const isError = status.includes('abnormal') || status.includes('invalid');
+    const isError = status.includes('abnormal') || status.includes('invalid') || status.includes('timeout') || status.includes('Long-term failure');
 
     if (isError && !alertedShuttles.has(s.Shuttle)) {
       alertedShuttles.add(s.Shuttle);
@@ -83,22 +83,28 @@ async function loadShuttles() {
 
     const ipLink = `http://${s.IP.split(/[/:]/)[0]}`;
 
-    col.innerHTML = `
-      <div class="card shadow-sm mb-3 ${bgClass}" style="width: 200px; height: 200px; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin: auto;">
-        <br>
-        <h6 class="card-title mb-2">Shuttle ${s.Shuttle}</h6>
-        <p class="card-text mb-1"><strong>Level:</strong> ${s.Level}</p>
-        <p class="card-text mb-1"><strong>Aisle:</strong> ${s.Aisle}</p>
-        <p class="card-text mb-2"><strong>Status:</strong> ${s.Status}</p>
-        <br>
-        <a class="btn btn-light btn-sm mt-auto" href="${ipLink}" target="_blank">Dashboard</a>
-        <br>
-      </div>
-    `;
+const taskButton = s.TaskNoLink === "N/A" 
+  ? `<button class="btn btn-sm btn-light mb-1 mt-1" style="padding: 0.25rem 0.4rem; font-size: 0.65rem;" disabled>No Task</button>`
+  : `<a href="${s.TaskNoLink}" class="btn btn-sm btn-light mb-1 mt-1" style="padding: 0.25rem 0.4rem; font-size: 0.65rem;" target="_blank">Task</a>`;
+
+col.innerHTML = `
+<div class="card shadow-sm mb-3 ${bgClass} text-center p-2">
+    <h6 class="card-title mt-1 mb-1" style="font-size:0.8rem;">Shuttle ${s.Shuttle}</h6>
+    <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Level:</strong> ${s.Level}</p>
+    <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Aisle:</strong> ${s.Aisle}</p>
+    <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Status:</strong> ${s.Status}</p>
+    <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Execution Phase:</strong> ${s.ExecutionPhase}</p>
+    ${taskButton}
+    <a href="${ipLink}" class="btn btn-sm btn-light mb-1 mt-1" style="padding: 0.25rem 0.4rem; font-size: 0.65rem;" target="_blank">PLC Screen</a>
+    <a href="${s.OperationLink}" class="btn btn-sm btn-light mb-1 mt-1" style="padding: 0.25rem 0.4rem; font-size: 0.65rem;" target="_blank">Operation</a>
+</div>
+`;
+
+
 
     row.appendChild(col);
   });
 }
 
 loadShuttles();
-setInterval(loadShuttles, 10000);
+setInterval(loadShuttles, 3000);

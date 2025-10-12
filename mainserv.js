@@ -72,26 +72,6 @@ function updateShuttleData() {
   });
 }
 
-// API endpoint to always serve latest shuttleData
-app.get('/api/shuttles', (req, res) => {
-  // Optionally, read directly from file every time
-  fs.readFile(shuttleJsonPath, 'utf8', (err, json) => {
-    if (err) {
-      console.error("Failed to read shuttle data:", err.message);
-      return res.status(500).send("Failed to read shuttle data");
-    }
-
-    try {
-      const data = JSON.parse(json);
-      res.json(data);
-    } catch (e) {
-      console.error("Invalid JSON:", e.message);
-      res.status(500).send("Invalid shuttle data JSON");
-    }
-  });
-});
-
-
 
 //use body parser for requests and app.use for path declaration.
 
@@ -347,7 +327,21 @@ app.get('/shuttles', (req, res) => {
 });
 
 app.get('/api/shuttles', (req, res) => {
-  res.json(shuttleData); 
+  // Optionally, read directly from file every time
+  fs.readFile(shuttleJsonPath, 'utf8', (err, json) => {
+    if (err) {
+      console.error("Failed to read shuttle data:", err.message);
+      return res.status(500).send("Failed to read shuttle data");
+    }
+
+    try {
+      const data = JSON.parse(json);
+      res.json(data);
+    } catch (e) {
+      console.error("Invalid JSON:", e.message);
+      res.status(500).send("Invalid shuttle data JSON");
+    }
+  });
 });
 
 app.delete('/delete-message/:id', async (req, res) => {
@@ -361,10 +355,8 @@ app.delete('/delete-message/:id', async (req, res) => {
   }
 });
 
-//run scrapper on a timer interval
 
-updateShuttleData();
-setInterval(updateShuttleData, 30000);
+updateShuttleData()
 
 
 app.listen(port, () => {
