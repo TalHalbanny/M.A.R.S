@@ -1,5 +1,5 @@
 
-//connect relevant libreries.
+//--REQUIRE NEEDED LIBRARIES--
 
 const fs = require('fs');
 const path = require('path');
@@ -8,17 +8,17 @@ const express = require('express');
 const mongoose = require('mongoose');
 const { spawn } = require('child_process');
 
-//connect and declare port number
+//--EXPRESS APP--
 
 const port = 3000; 
 const app = express(); 
 
-//extract data from JSON that is updated from python script
+//--EXTRACT DATA FROM PYTHON SCRAPPER SHUTTLE DATA JSON--
 
 const shuttleJsonPath = path.join(__dirname, 'shuttle_data.json'); 
 let shuttleData = [];
 
-// Preload shuttleData at startup if file exists
+// --PRELOAD SHUTTLE DATA IF EXISTS--
 try {
   if (fs.existsSync(shuttleJsonPath)) {
     const json = fs.readFileSync(shuttleJsonPath, 'utf8');
@@ -29,7 +29,8 @@ try {
   console.error("Failed to preload shuttle_data.json:", err.message);
 }
 
-// Function to update shuttleData by running the Python scraper
+// -- FUNCTION: UPDATE SHUTTLE DATA JSON VIA SCRAPPER--
+
 function updateShuttleData() {
   const pythonScript = path.join(__dirname, 'scarpper_v1.py'); 
 
@@ -48,7 +49,8 @@ function updateShuttleData() {
   python.on('close', (code) => {
     console.log(`Python exited with code ${code}`);
     
-    // Read JSON after Python script finishes
+    // --READ JSON FILE AFTER THE SCRAPPER FINISHED UPDATING--
+
     fs.readFile(shuttleJsonPath, 'utf8', (err, json) => {
       if (err) {
         console.error("Error reading shuttle_data.json:", err.message);
@@ -73,19 +75,20 @@ function updateShuttleData() {
 }
 
 
-//use body parser for requests and app.use for path declaration.
+//--USE BODY PARSER FOR PATH DECLARATIONS--
 
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
 app.use(express.static(path.join(__dirname)));
 
-//connect to mongoDB Database.
+//CONNECT TO MONGODB USING LIBRARY.--
 
 mongoose.connect('mongodb://localhost:27017/equipmentReports')
   .then(() => console.log("Connected to MongoDB"))
   .catch(err => console.error("MongoDB connection error:", err));
 
-//Schemas for data retrivals from collections.
+
+//--SCHEMAS FOR DATA RETRIVAL FROM COLLECTIONS WITHIN MONGO DB--
 
 const genericSchema = new mongoose.Schema({}, { strict: false, timestamps: true });
 
@@ -97,7 +100,7 @@ const messageSchema = new mongoose.Schema({
 
 const Message = mongoose.model("messages", messageSchema, "messages")
 
-//getmodel Function for getting schema and quering the database acts as a short-cut.
+//--FUNCTION: SHORTCUT FOR RETRIEVING CARDS, VIA SCHEMAS.--
 
 function getmodel(equipmentType) {
   return mongoose.model(equipmentType, genericSchema, equipmentType);
@@ -116,6 +119,7 @@ const collectionMap = {
   Lift: "Lift"
 };
 
+//--ROUTE POST: APP ROUTES FOR RETRIEVING DATA, MAPPING OF DATA RETRIEVAL, WHAT EACH DATA RECIEVED FROM THE JSON FILE IS--
 
 
 app.post('/submit-form', async (req, res) => {
@@ -195,7 +199,7 @@ app.post('/submit-form', async (req, res) => {
   }
 });
 
-
+//--ROUTE POST: GET HISTORY FROM THE DATABASE TO SHOW IN FRONT END, SENT REQUEST BY FORM, GET DATA BACK.--
 
 app.post('/get-history', async (req, res) => {
   try {
@@ -247,18 +251,28 @@ app.post('/get-history', async (req, res) => {
   }
 });
 
+//--ROUTE GET: GET HISTORY PAGE--
+
 
 app.get('/history', (req, res) => { 
   res.sendFile(path.join(__dirname, 'history.html'));
 });
 
+
+//--ROUTE GET: GET REPORT PAGE--
+
+
 app.get('/report', (req,res) =>{
   res.sendFile(path.join(__dirname,'report.html'));
 });
 
+//--ROUTE GET: GET TASK PAGE--
+
 app.get('/createtask', (req,res) => {
   res.sendFile(path.join(__dirname, 'createtask.html'));
 });
+
+//--ROUTE GET: GET_SHUTTLES PAGE JSON--
 
 app.get('/get_shuttles', async (req,res) => {
   try { 
@@ -274,6 +288,7 @@ app.get('/get_shuttles', async (req,res) => {
   }
 });
 
+//--ROUTE GET: GET_AGVS PAGE JSON--
 
 
 app.get('/get_AGVS', async (req, res) => {
@@ -288,6 +303,9 @@ app.get('/get_AGVS', async (req, res) => {
   }
 
 });
+
+//--ROUTE POST: INSERT MESSAGE TO DATABASE--
+
 
 app.post('/submit-message', async (req, res) => {
   try {
@@ -312,6 +330,9 @@ app.post('/submit-message', async (req, res) => {
   }
 });
 
+//--ROUTE GET: GET MESSAGES FROM DATA BASE--
+
+
 app.get('/get-messages', async (req, res) => {
   try {
     const messages = await Message.find().sort({ createdAt: -1 }).limit(4).lean();
@@ -321,6 +342,10 @@ app.get('/get-messages', async (req, res) => {
     res.status(500).send("Failed to fetch messages");
   }
 });
+
+
+//--ROUTE GET: GET SHUTTLE MONITORING PAGE--
+
 
 app.get('/shuttles', (req, res) => {
   res.sendFile(path.join(__dirname, 'shuttle_stat.html'));
@@ -344,6 +369,9 @@ app.get('/api/shuttles', (req, res) => {
   });
 });
 
+//--ROUTE DELETE: DELETE MESSAGE AS AKNOLOEDGMEN BUTTON PRESSED.--
+
+
 app.delete('/delete-message/:id', async (req, res) => {
   try {
     const { id } = req.params;
@@ -355,9 +383,11 @@ app.delete('/delete-message/:id', async (req, res) => {
   }
 });
 
+//--APPLICACTION EXEC--
 
 updateShuttleData()
 
+//--SERVER PORT LISTENING--
 
 app.listen(port, () => {
   console.log("Server Running on 3000");
