@@ -16,6 +16,7 @@ const app = express();
 //--EXTRACT DATA FROM PYTHON SCRAPPER SHUTTLE DATA JSON--
 
 const shuttleJsonPath = path.join(__dirname, 'shuttle_data.json'); 
+const shuttleLinkPath = path.join(__dirname, 'shuttle_links.json');
 let shuttleData = [];
 
 // --PRELOAD SHUTTLE DATA IF EXISTS--
@@ -351,8 +352,11 @@ app.get('/shuttles', (req, res) => {
   res.sendFile(path.join(__dirname, 'shuttle_stat.html'));
 });
 
+
+//--ROUTE GET: SHUTTLE DATA RETRIVAL FROM JSON SHUTTLE DATA--
+
 app.get('/api/shuttles', (req, res) => {
-  // Optionally, read directly from file every time
+  
   fs.readFile(shuttleJsonPath, 'utf8', (err, json) => {
     if (err) {
       console.error("Failed to read shuttle data:", err.message);
@@ -368,6 +372,26 @@ app.get('/api/shuttles', (req, res) => {
     }
   });
 });
+
+//--ROUTE GET: GET CONTENT OF SHUTTLE LINKS JSON.--
+
+app.get('/api/shuttlelinkdata', (req, res) => {
+  fs.readFile(shuttleLinkPath, 'utf8', (err, data) => {
+    if (err) {
+      console.error('Error retrieving JSON data of Links:', err);
+      return res.status(500).json({ error: 'Failed to retrieve data!' });
+    }
+
+    try {
+      const jsonData = JSON.parse(data);
+      res.json(jsonData); // <- now sends data correctly
+    } catch (parseErr) {
+      console.error('Error parsing shuttle links JSON:', parseErr);
+      res.status(500).json({ error: 'Invalid JSON format!' });
+    }
+  });
+});
+
 
 //--ROUTE DELETE: DELETE MESSAGE AS AKNOLOEDGMEN BUTTON PRESSED.--
 

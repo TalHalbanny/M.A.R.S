@@ -5,10 +5,12 @@ from selenium.webdriver.support.select import Select
 from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.support import expected_conditions as EC
+from webdriver_manager.chrome import ChromeDriverManager
 import json
 import time
 import copy
 import datetime
+
 
 # Paths and URLs
 chrome_driver_path = r"C:\Users\MSService\repositories\M.A.R.S-1\chromedriver.exe"
@@ -24,7 +26,7 @@ chrome_options.add_argument("--no-sandbox")
 chrome_options.add_argument("--window-size=1920,1080")
 
 # DRIVER
-service = Service(executable_path=chrome_driver_path)
+service = Service(ChromeDriverManager().install())
 driver = webdriver.Chrome(service=service, options=chrome_options)
 
 # LOGIN FUNCTION

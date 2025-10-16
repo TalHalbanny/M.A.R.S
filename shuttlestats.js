@@ -1,4 +1,5 @@
 const alertedShuttles = new Set();
+const handledShuttles = new Set();   // 🔹 NEW — stores shuttles manually acknowledged
 const alertSound = new Audio('alarm.mp3');
 let soundEnabled = false;
 
@@ -56,7 +57,8 @@ async function loadShuttles() {
     col.className = 'col-md-2';
 
     const status = s.Status.toLowerCase().trim();
-    const isError = status.includes('abnormal') || status.includes('invalid') || status.includes('timeout') || status.includes('Long-term failure');
+    const isError = status.includes('abnormal') || status.includes('invalid') ||
+                    status.includes('timeout') || status.includes('long-term failure');
 
     if (isError && !alertedShuttles.has(s.Shuttle)) {
       alertedShuttles.add(s.Shuttle);
@@ -71,11 +73,19 @@ async function loadShuttles() {
 
     if (!isError && alertedShuttles.has(s.Shuttle)) {
       alertedShuttles.delete(s.Shuttle);
+      handledShuttles.delete(s.Shuttle);  // 🔹 reset handled state if no longer in error
     }
 
+    // 🔹 Background color logic (includes handled state)
     let bgClass = 'bg-success text-white';
-    if (isError) bgClass = 'bg-danger text-white';
-    else if (status.includes('task in progress') || status.includes('run') || status.includes('waiting') || status.includes('complete')) {
+    if (isError) {
+      if (handledShuttles.has(s.Shuttle)) {
+        bgClass = 'bg-info text-dark'; // light blue if handled
+      } else {
+        bgClass = 'bg-danger text-white'; // red if not yet handled
+      }
+    } else if (status.includes('task in progress') || status.includes('run') ||
+               status.includes('waiting') || status.includes('complete')) {
       bgClass = 'bg-warning text-dark';
     } else if (status.includes('offline')) {
       bgClass = 'bg-primary text-white';
@@ -83,26 +93,45 @@ async function loadShuttles() {
 
     const ipLink = `http://${s.IP.split(/[/:]/)[0]}`;
 
-const taskButton = s.TaskNoLink === "N/A" 
-  ? `<button class="btn btn-sm btn-light mb-1 mt-1" style="padding: 0.25rem 0.4rem; font-size: 0.65rem;" disabled>No Task</button>`
-  : `<a href="${s.TaskNoLink}" class="btn btn-sm btn-light mb-1 mt-1" style="padding: 0.25rem 0.4rem; font-size: 0.65rem;" target="_blank">Task</a>`;
+    const taskButton = s.TaskNoLink === "N/A"
+      ? `<button class="btn btn-sm btn-light mb-1 mt-1" disabled style="padding:0.25rem 0.4rem; font-size:0.65rem;">No Task</button>`
+      : `<a href="${s.TaskNoLink}" class="btn btn-sm btn-light mb-1 mt-1" target="_blank" style="padding:0.25rem 0.4rem; font-size:0.65rem;">Task</a>`;
 
-col.innerHTML = `
-<div class="card shadow-sm mb-3 ${bgClass} text-center p-2">
-    <h6 class="card-title mt-1 mb-1" style="font-size:0.8rem;">Shuttle ${s.Shuttle}</h6>
-    <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Level:</strong> ${s.Level}</p>
-    <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Aisle:</strong> ${s.Aisle}</p>
-    <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Status:</strong> ${s.Status}</p>
-    <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Execution Phase:</strong> ${s.ExecutionPhase}</p>
-    ${taskButton}
-    <a href="${ipLink}" class="btn btn-sm btn-light mb-1 mt-1" style="padding: 0.25rem 0.4rem; font-size: 0.65rem;" target="_blank">PLC Screen</a>
-    <a href="${s.OperationLink}" class="btn btn-sm btn-light mb-1 mt-1" style="padding: 0.25rem 0.4rem; font-size: 0.65rem;" target="_blank">Operation</a>
-</div>
-`;
-
-
+    col.innerHTML = `
+      <div class="card shadow-sm mb-3 ${bgClass} text-center p-2" data-shuttle="${s.Shuttle}">
+        <h6 class="card-title mt-1 mb-1" style="font-size:0.8rem;">Shuttle ${s.Shuttle}</h6>
+        <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Level:</strong> ${s.Level}</p>
+        <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Aisle:</strong> ${s.Aisle}</p>
+        <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Status:</strong> ${s.Status}</p>
+        <p class="card-text mb-1" style="font-size:0.7rem;"><strong>Execution Phase:</strong> ${s.ExecutionPhase}</p>
+        ${taskButton}
+        <a href="${ipLink}" class="btn btn-sm btn-light mb-1 mt-1 plc-btn"
+           style="padding:0.25rem 0.4rem; font-size:0.65rem;" target="_blank">
+           PLC Screen
+        </a>
+        <a href="${s.OperationLink}" class="btn btn-sm btn-light mb-1 mt-1"
+           style="padding:0.25rem 0.4rem; font-size:0.65rem;" target="_blank">
+           Operation
+        </a>
+      </div>
+    `;
 
     row.appendChild(col);
+  });
+
+  // 🔹 Add PLC click listeners AFTER rendering
+  document.querySelectorAll('.plc-btn').forEach(btn => {
+    btn.addEventListener('click', e => {
+      const card = e.target.closest('.card');
+      const shuttleId = card.getAttribute('data-shuttle');
+
+      // only if currently red
+      if (card.classList.contains('bg-danger')) {
+        card.classList.remove('bg-danger', 'text-white');
+        card.classList.add('bg-info', 'text-dark');
+        handledShuttles.add(shuttleId);
+      }
+    });
   });
 }
 
