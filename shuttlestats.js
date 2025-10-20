@@ -128,6 +128,22 @@ async function loadShuttles() {
     row.appendChild(col);
   });
 
+const hasAnyError = Array.from(alertedShuttles).length > 0;
+const noError = Array.from(alertedShuttles).length == 0;
+const okSign = document.getElementById('ok');
+const globalWarning = document.getElementById('global-warning');
+
+if (globalWarning) {
+  globalWarning.style.display = hasAnyError ? 'block' : 'none';
+} 
+
+if (okSign) {
+  okSign.style.display = noError ? 'block' : 'none'
+}
+
+
+
+
   // 🔹 Add PLC click listeners AFTER rendering
   document.querySelectorAll('.plc-btn').forEach(btn => {
     btn.addEventListener('click', e => {

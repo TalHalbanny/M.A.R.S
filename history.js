@@ -143,8 +143,10 @@ function enableEditableCells() {
 //--ENABLE DELETE BUTTON FUNCTION FOR CONNECTING TO DATABASE--
 
 function enableDeleteButtons() {
+
   document.querySelectorAll('button.btn').forEach(btn => {
     if (btn.dataset.listener) return; // prevent multiple listeners
+    
     btn.dataset.listener = true;
 
     btn.addEventListener('click', async () => {
