@@ -39,8 +39,15 @@ function showNotification(message) {
 }
 
 async function loadShuttles() {
-  const res = await fetch('/api/shuttles');
-  const shuttles = await res.json();
+
+  const [shuttleres,shuttleLinks] = await Promise.all([
+    fetch('/api/shuttles'),
+    fetch ('/api/shuttlelinkdata')
+  ]);
+
+  const shuttles = await shuttleres.json()
+  const links = await shuttleLinks.json()
+  console.log("Fetched shuttle link data:", links); 
   const container = document.getElementById('shuttle-container');
 
   container.innerHTML = '';
@@ -97,6 +104,8 @@ async function loadShuttles() {
       ? `<button class="btn btn-sm btn-light mb-1 mt-1" disabled style="padding:0.25rem 0.4rem; font-size:0.65rem;">No Task</button>`
       : `<a href="${s.TaskNoLink}" class="btn btn-sm btn-light mb-1 mt-1" target="_blank" style="padding:0.25rem 0.4rem; font-size:0.65rem;">Task</a>`;
 
+      const operationLink = links[index]?.OperationLink || '#';
+
     col.innerHTML = `
       <div class="card shadow-sm mb-3 ${bgClass} text-center p-2" data-shuttle="${s.Shuttle}">
         <h6 class="card-title mt-1 mb-1" style="font-size:0.8rem;">Shuttle ${s.Shuttle}</h6>
@@ -109,7 +118,7 @@ async function loadShuttles() {
            style="padding:0.25rem 0.4rem; font-size:0.65rem;" target="_blank">
            PLC Screen
         </a>
-        <a href="${s.OperationLink}" class="btn btn-sm btn-light mb-1 mt-1"
+        <a href="${operationLink}" class="btn btn-sm btn-light mb-1 mt-1"
            style="padding:0.25rem 0.4rem; font-size:0.65rem;" target="_blank">
            Operation
         </a>

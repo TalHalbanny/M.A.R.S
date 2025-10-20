@@ -200,6 +200,44 @@ app.post('/submit-form', async (req, res) => {
   }
 });
 
+//--ROUTE POST: UPDATE HISTORY HOUR AND DATE--
+
+app.post('/update-history', async (req, res) => {
+  const { id, field, value, equipment } = req.body;
+
+  const collectionName = collectionMap[equipment];
+  const Model = getmodel(collectionName);
+
+  let updateValue = value;
+
+  // Convert date fields to Date objects
+  if (field.toLowerCase().includes('date')) {
+    updateValue = new Date(value);  // <-- This is the key
+  }
+
+  await Model.updateOne({ _id: id }, { [field]: updateValue });
+  res.send('Updated successfully');
+});
+
+//--ROUTE POST: DELETE A ROW IN HISTORY--
+
+app.post('/delete-history', async (req,res) => {
+
+  const {id, equipment} = req.body;
+
+  const collectionName = collectionMap[equipment];
+  const Model = getmodel(collectionName);
+  const result = await Model.deleteOne({_id: id});
+
+  if (result.deletedCount === 1) {
+    res.status(200).send('Delete Succesful');
+  } else {
+    res.status(404).send('Row Not Found! Couldnt Delete')
+  }
+});
+
+
+
 //--ROUTE POST: GET HISTORY FROM THE DATABASE TO SHOW IN FRONT END, SENT REQUEST BY FORM, GET DATA BACK.--
 
 app.post('/get-history', async (req, res) => {
@@ -227,7 +265,7 @@ app.post('/get-history', async (req, res) => {
 
     if (month) {
       const [year, mon] = month.split("-");
-      const monthIndex = parseInt(mon, 10) - 1; // JS months are 0-11
+      const monthIndex = parseInt(mon, 10) - 1; 
 
       const start = new Date(Date.UTC(year, monthIndex, 1));
       
@@ -324,12 +362,14 @@ app.post('/submit-message', async (req, res) => {
 
     await newMessage.save();
 
-    res.json({ success: true, msg: "Message saved" });
+    res.redirect('/createtask');
+
   } catch (err) {
     console.error("Error saving message:", err);
     res.status(500).send("Failed to save message");
   }
 });
+
 
 //--ROUTE GET: GET MESSAGES FROM DATA BASE--
 
