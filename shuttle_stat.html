@@ -10,9 +10,10 @@
 </head>
 <body class="bg-light">
 
-    <nav class="navbar navbar-expand-lg bg-light shadow">
+<nav class="navbar navbar-expand-lg bg-light shadow">
   <div class="container">
     <a class="navbar-brand fw-bold text-danger" href="/">Megastore M.A.R.S</a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -23,17 +24,22 @@
         <li class="nav-item">
           <a class="nav-link active text-dark" aria-current="page" href="/">Main</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="/report">Report Issue</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="/history">Report History</a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link text-dark" href="/createtask">Create Crew Task</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="/shuttle_stat.html">Monitoring</a>
+        </li>
+
+                <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-dark" href="#" id="reportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Reporting
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="reportDropdown">
+            <li><a class="dropdown-item" href="/report">Report Issue</a></li>
+            <li><a class="dropdown-item" href="/history">Report History</a></li>
+          </ul>
         </li>
       </ul>
     </div>

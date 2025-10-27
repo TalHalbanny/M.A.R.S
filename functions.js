@@ -165,8 +165,29 @@ const templates = {
         <div class="mb-3">
           <label class="form-label" for="liftSolution">Solution Made for Issue</label>
           <textarea class="form-control" id="liftSolution" name="solution" rows="3" placeholder="Describe the fix..."></textarea>
-        </div>
-      `
+        </div>`,
+   Overweight: `
+  <div class="mb-3">
+    <label class="form-label" for="overweightHour">Hour</label>
+    <select class="form-select" id="overweightHour" name="overweightHour" required></select>
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="overweightDate">Date</label>
+    <input type="date" class="form-control" id="overweightDate" name="overweightDate" required />
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="ovWeight">Weight (kg)</label>
+    <input type="number" class="form-control" id="ovWeight" name="ovWeight" placeholder="Enter weight..." step="0.1" min="0" required />
+  </div>
+  <div class="mb-3">
+    <label class="form-label" for="ovImage">Upload Picture</label>
+    <input type="file" class="form-control" id="ovImage" name="image" accept="image/*" multiple />
+  </div>
+  <div class="mb-3">
+          <label class="form-label" for="boxNumber">Box Number</label>
+          <textarea class="form-control" id="boxNumber" name="boxNumber" rows="3" placeholder="Write box number here..."></textarea>
+  </div>
+`
     };
 
 
@@ -252,7 +273,7 @@ equipmentSelect.addEventListener('change', () => {
   if (type === 'Shuttle') populateShuttles('shuttleNum');
   if (type === 'AGV') populateAGVs('agvNum');
 
-  if (['Shuttle', 'AGV', 'RGV', 'Lift'].includes(type)) {
+  if (['Shuttle', 'AGV', 'RGV', 'Lift', 'Overweight'].includes(type)) {
     populateHours(type.toLowerCase() + 'Hour');
   }
 });
@@ -262,23 +283,25 @@ equipmentSelect.addEventListener('change', () => {
  */
 document.getElementById('equipmentForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const formData = new FormData(e.target);
-  const data = Object.fromEntries(formData.entries());
+
+  const form = e.target;
+  const formData = new FormData(form); // includes files automatically
 
   try {
     const res = await fetch('/submit-form', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
+      body: formData // DO NOT stringify or set Content-Type
     });
+
     const msg = await res.text();
     alert(msg);
 
-    e.target.reset();
+    form.reset();
     dynamicFields.innerHTML = '';
   } catch (err) {
     console.error(err);
     alert('Failed to submit report.');
   }
 });
+
 

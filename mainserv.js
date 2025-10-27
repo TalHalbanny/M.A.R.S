@@ -7,6 +7,7 @@ const bodyparser = require('body-parser');
 const express = require('express');
 const mongoose = require('mongoose');
 const { spawn } = require('child_process');
+const multer = require('multer');
 
 //--EXPRESS APP--
 
@@ -15,11 +16,33 @@ const app = express();
 
 //--EXTRACT DATA FROM PYTHON SCRAPPER SHUTTLE DATA JSON--
 
+
 const shuttleJsonPath = path.join(__dirname, 'shuttle_data.json'); 
 const shuttleLinkPath = path.join(__dirname, 'shuttle_links.json');
 let shuttleData = [];
 
+
+//--CREATE MULTER UPLOAD PICTURE DIRECTORY (OVERWEIGHT FORM POST)--
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    const folder = path.join(__dirname, 'overweightUploads');
+    fs.mkdirSync(folder, { recursive: true }); // make folder if missing
+    cb(null, folder); // important!
+  },
+  filename: function (req, file, cb) {
+    const uniqueName = Date.now() + '-' + Math.round(Math.random() * 1e9);
+    cb(null, uniqueName + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage });
+app.use('/overweightUploads', express.static(path.join(__dirname, 'overweightUploads')));
+
+
 // --PRELOAD SHUTTLE DATA IF EXISTS--
+
 try {
   if (fs.existsSync(shuttleJsonPath)) {
     const json = fs.readFileSync(shuttleJsonPath, 'utf8');
@@ -76,7 +99,7 @@ function updateShuttleData() {
 }
 
 
-//--USE BODY PARSER FOR PATH DECLARATIONS--
+//--MIDDLEWARE: USE BODY PARSER FOR PATH DECLARATIONS--
 
 app.use(bodyparser.urlencoded({ extended: true }));
 app.use(bodyparser.json());
@@ -117,13 +140,14 @@ const collectionMap = {
   Shuttle: "Shuttle",
   AGV: "AGV",
   RGV: "RGV",
-  Lift: "Lift"
+  Lift: "Lift",
+  Overweight: "Overweight"
 };
 
 //--ROUTE POST: APP ROUTES FOR RETRIEVING DATA, MAPPING OF DATA RETRIEVAL, WHAT EACH DATA RECIEVED FROM THE JSON FILE IS--
 
 
-app.post('/submit-form', async (req, res) => {
+app.post('/submit-form', upload.array('image', 5), async (req, res) => {
   try {
     const { equipment, ...data } = req.body;
     if (!equipment) return res.status(400).send("Missing Equipment Type!");
@@ -184,6 +208,17 @@ app.post('/submit-form', async (req, res) => {
           solution: data.solution
         };
         break;
+        case "Overweight":
+          mappedData = {
+            equipment,
+            overweightHour: data.overweightHour,
+            overweightDate: data.overweightDate,
+            ovWeight: data.ovWeight,
+            boxNumber: data.boxNumber,
+            ovImage: req.files ? req.files.map(f => `overweightUploads/${f.filename}`) : []
+        };
+        break;
+
 
       default:
         return res.status(400).send("Unknown equipment type");
@@ -242,7 +277,9 @@ app.post('/delete-history', async (req,res) => {
 
 app.post('/get-history', async (req, res) => {
   try {
-    const { equipment, month } = req.body;
+    
+    const { equipment, month, equipmentNum } = req.body;
+
     console.log("Request body:", req.body);
 
     if (!equipment) return res.status(400).send("Must choose equipment type");
@@ -260,6 +297,7 @@ app.post('/get-history', async (req, res) => {
       case "AGV": dateField = "agvDate"; break;
       case "RGV": dateField = "rgvDate"; break;
       case "Lift": dateField = "liftDate"; break;
+      case "Overweight": dateField = "overweightDate"; break;
       default: dateField = "createdAt"; break;
     }
 
@@ -274,8 +312,16 @@ app.post('/get-history', async (req, res) => {
       query[dateField] = { $gte: start, $lt: end };
     }
 
- 
+        if (equipmentNum && equipmentNum !== "All") {
+      switch (equipment) {
+        case "Shuttle": query.shuttleNum = equipmentNum; break;
+        case "AGV": query.AGVnum = equipmentNum; break;
+        case "RGV": query.rgvNum = equipmentNum; break;
+        case "Lift": query.liftNum = equipmentNum; break;
+      }
+    }
 
+ 
     console.log("Mongo query:", query); 
 
     const docs = await equipmentModel.find(query).sort({ [dateField]: -1 }).lean();
@@ -318,6 +364,11 @@ app.get('/get_shuttles', async (req,res) => {
 
     const shudata = getmodel("shuttleList");
 
+    const query = {};
+    if (req.query.shuttleNum) {
+      query.shuttleNum = req.query.shuttleNum; 
+    }
+
     const shuttles = await shudata.find({}, {shuttleNum: 1, _id: 0}).lean();
 
     res.json(shuttles);
@@ -334,6 +385,8 @@ app.get('/get_AGVS', async (req, res) => {
 
   try {
     const AGdata = getmodel("AGVList");
+    const query = {};
+    if (req.query.AGVnum) query.AGVnum = req.query.AGVnum;
     const AGshutles = await AGdata.find({}, {AGVnum: 1 , _id: 0}).lean();
     res.json(AGshutles);
   } catch (err) {
@@ -342,6 +395,37 @@ app.get('/get_AGVS', async (req, res) => {
   }
 
 });
+
+//--ROUTE GET: GET RGVS PAGE JSON--
+
+app.get('/get_RGVS', async (req, res) => {
+  try {
+    const RGVdata = getmodel("RGVlist"); 
+    const query = {};
+    if (req.query.rgvNum) query.rgvNum = req.query.rgvNum;
+    const rgvs = await RGVdata.find({}, { rgvNum: 1, _id: 0 }).lean();
+    res.json(rgvs);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to Retrieve RGV Data");
+  }
+});
+
+//--ROUTE GET: GET_LIFTS PAGE JSON--
+
+app.get('/get_LIFTS', async (req, res) => {
+  try {
+    const Liftdata = getmodel("LiftList"); 
+    const query = {};
+    if (req.query.liftNum) query.liftNum = req.query.liftNum;
+    const lifts = await Liftdata.find({}, { liftNum: 1, _id: 0 }).lean();
+    res.json(lifts);
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Failed to Retrieve Lift Data");
+  }
+});
+
 
 //--ROUTE POST: INSERT MESSAGE TO DATABASE--
 

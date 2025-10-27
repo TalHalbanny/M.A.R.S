@@ -64,8 +64,9 @@ async function loadShuttles() {
     col.className = 'col-md-2';
 
     const status = s.Status.toLowerCase().trim();
-    const isError = status.includes('abnormal') || status.includes('invalid') ||
-                    status.includes('timeout') || status.includes('long-term failure');
+    const longterm = s.Status.includes('long-term');
+    const isError = !longterm && (status.includes('abnormal') || status.includes('invalid') ||
+                    status.includes('timeout'));
 
     if (isError && !alertedShuttles.has(s.Shuttle)) {
       alertedShuttles.add(s.Shuttle);
@@ -83,20 +84,28 @@ async function loadShuttles() {
       handledShuttles.delete(s.Shuttle);  // 🔹 reset handled state if no longer in error
     }
 
-    // 🔹 Background color logic (includes handled state)
-    let bgClass = 'bg-success text-white';
-    if (isError) {
-      if (handledShuttles.has(s.Shuttle)) {
-        bgClass = 'bg-info text-dark'; // light blue if handled
-      } else {
-        bgClass = 'bg-danger text-white'; // red if not yet handled
-      }
-    } else if (status.includes('task in progress') || status.includes('run') ||
-               status.includes('waiting') || status.includes('complete')) {
-      bgClass = 'bg-warning text-dark';
-    } else if (status.includes('offline')) {
-      bgClass = 'bg-primary text-white';
-    }
+
+
+
+
+  let bgClass = 'bg-success text-white';
+
+if (longterm) {
+  bgClass = 'bg-dark text-white'; 
+} else if (isError) {
+  if (handledShuttles.has(s.Shuttle)) {
+    bgClass = 'bg-info text-dark'; 
+  } else {
+    bgClass = 'bg-danger text-white'; 
+  }
+} else if (status.includes('task in progress') || status.includes('run') ||
+           status.includes('waiting') || status.includes('complete')) {
+  bgClass = 'bg-warning text-dark';
+} else if (status.includes('offline')) {
+  bgClass = 'bg-primary text-white';
+}
+    
+    
 
     const ipLink = `http://${s.IP.split(/[/:]/)[0]}`;
 
@@ -142,15 +151,11 @@ if (okSign) {
 }
 
 
-
-
-  // 🔹 Add PLC click listeners AFTER rendering
   document.querySelectorAll('.plc-btn').forEach(btn => {
     btn.addEventListener('click', e => {
       const card = e.target.closest('.card');
       const shuttleId = card.getAttribute('data-shuttle');
 
-      // only if currently red
       if (card.classList.contains('bg-danger')) {
         card.classList.remove('bg-danger', 'text-white');
         card.classList.add('bg-info', 'text-dark');

@@ -87,6 +87,7 @@
 <nav class="navbar navbar-expand-lg bg-light shadow">
   <div class="container">
     <a class="navbar-brand fw-bold text-danger" href="/">Megastore M.A.R.S</a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
       aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -97,17 +98,22 @@
         <li class="nav-item">
           <a class="nav-link active text-dark" aria-current="page" href="/">Main</a>
         </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="/report">Report Issue</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-dark" href="/history">Report History</a>
-        </li>
+
         <li class="nav-item">
           <a class="nav-link text-dark" href="/createtask">Create Crew Task</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-dark" href="/shuttle_stat.html">Monitoring</a>
+        </li>
+
+                <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-dark" href="#" id="reportDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Reporting
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="reportDropdown">
+            <li><a class="dropdown-item" href="/report">Report Issue</a></li>
+            <li><a class="dropdown-item" href="/history">Report History</a></li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -119,6 +125,12 @@
 <div class="text-center mb-4">
   <label for="monthFilter"><strong>Filter by Year & Month:</strong></label>
   <input type="month" id="monthFilter" class="form-control d-inline-block w-auto">
+
+  <label for="equipmentNumFilter" class="ms-3"><strong>Filter by Number:</strong></label>
+<select id="equipmentNumFilter" class="form-select d-inline-block w-auto">
+  <option value="">All</option>
+</select>
+
 </div>
 
 <div class="page-container">
@@ -165,6 +177,28 @@
     </div>
   </div>
 </div>
+
+<div class="card container my-5 p-4">
+  <h1 class="mb-4 text-center">Overweight Recordings</h1>
+
+  <table class="table table-bordered table-striped text-center align-middle">
+    <thead class="table-danger">
+      <tr>
+        <th>Date</th>
+        <th>Hour</th>
+        <th>Weight (kg)</th>
+        <th>Box Number</th>
+        <th>Image</th>
+      </tr>
+    </thead>
+    <tbody id="overweightBody">
+      <tr>
+        <td colspan="5" class="text-muted">Loading records...</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
 
 
 

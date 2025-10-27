@@ -21,12 +21,12 @@ function formatDate(dateStr) {
 
 //--FETCH HISTORY FROM ROUTER /GET-HISTORY FUNCTION--
 
-async function fetchHistory(equipment, month) {
+async function fetchHistory(equipment, month, equipmentNum) {
   try {
     const res = await fetch('/get-history', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ equipment, month })
+      body: JSON.stringify({ equipment, month, equipmentNum })
     });
 
     if (!res.ok) {
@@ -47,7 +47,7 @@ async function fetchHistory(equipment, month) {
 
     data.forEach(doc => {
       const reportedAt = doc.reportedAt || 'N/A';
-      const number = doc.shuttleNum || doc.agvNum || doc.rgvNum || doc.liftNum || 'N/A';
+      const number = doc.shuttleNum || doc.AGVnum || doc.rgvNum || doc.liftNum || 'N/A';
       const hour = doc.hour || 'N/A';
       const recordDate = doc[dateField] || 'N/A';
       const notes = doc.notes || 'N/A';
@@ -79,6 +79,54 @@ async function fetchHistory(equipment, month) {
     alert('Error fetching history');
   }
 }
+
+//--LOAD OVERWEIGHT DATA & INSERT TO TABLE ON FRONT END--
+
+async function loadOverweightData() {
+  try {
+    const res = await fetch('/get-history', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ equipment: 'Overweight' })
+    });
+
+    const data = await res.json();
+    console.log('Fetched Overweight Data:', data);
+    renderOverweightRows(data);
+
+  } catch (err) {
+    console.error('Failed to fetch Overweight data:', err);
+    const tbody = document.getElementById('overweightBody');
+    tbody.innerHTML = `<tr><td colspan="5" class="text-danger">Error loading data</td></tr>`;
+  }
+}
+
+function renderOverweightRows(data) {
+  const tbody = document.getElementById('overweightBody');
+  tbody.innerHTML = '';
+
+  if (!data.length) {
+    tbody.innerHTML = `<tr><td colspan="5" class="text-muted">No overweight records found.</td></tr>`;
+    return;
+  }
+
+  data.forEach(item => {
+    const date = item.overweightDate ? new Date(item.overweightDate).toLocaleDateString() : '-';
+
+    const row = document.createElement('tr');
+    row.innerHTML = `
+      <td>${date}</td>
+      <td>${item.overweightHour || '-'}</td>
+      <td>${item.ovWeight || '-'}</td>
+      <td>${item.boxNumber || '-'}</td>
+      <td><img src="/${item.ovImage[0]}" alt="Overweight" style="width:200px;height:200;"></td>`;
+    tbody.appendChild(row);
+  });
+}
+
+window.addEventListener('DOMContentLoaded', loadOverweightData);
+
+
 
 //--ENABLE EDITABLE CELLS FUNCTION--
 
@@ -176,6 +224,57 @@ function enableDeleteButtons() {
   });
 }
 
+const equipmentRadios = document.querySelectorAll('input[name="equipment"]');
+const equipmentNumSelect = document.getElementById('equipmentNumFilter');
+
+equipmentRadios.forEach(radio => {
+  radio.addEventListener('change', async () => {
+    const equipment = radio.value;
+    equipmentNumSelect.innerHTML = '<option value="">All</option>'; // reset
+
+    let url = '';
+
+    switch (equipment) {
+      case 'Shuttle':
+        url = '/get_shuttles';
+        break;
+      case 'AGV':
+        url = '/get_AGVS';
+        break;
+      case 'RGV':
+        // if you have RGVList endpoint, otherwise leave blank
+        url = '/get_RGVS';
+        break;
+      case 'Lift':
+        url = '/get_LIFTS';
+        break;
+      default:
+        url = '';
+    }
+
+    if (!url) return;
+
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+
+      data.forEach(item => {
+        // For Shuttles: shuttleNum, for AGV: AGVnum, etc.
+        const num = item.shuttleNum || item.AGVnum || item.rgvNum || item.liftNum;
+        if (num) {
+          const option = document.createElement('option');
+          option.value = num;
+          option.textContent = num;
+          equipmentNumSelect.appendChild(option);
+        }
+      });
+    } catch (err) {
+      console.error('Failed to fetch equipment numbers:', err);
+    }
+  });
+});
+
+
 
 
 //--EVENT LISTENERS--
@@ -184,13 +283,15 @@ historyForm.addEventListener('submit', e => {
   e.preventDefault();
   const equipment = historyForm.querySelector('input[name="equipment"]:checked')?.value;
   const month = monthInput.value;
+  const equipmentNum = equipmentNumSelect.value;
   if (!equipment) return alert('Please select an equipment type.');
-  fetchHistory(equipment, month);
+  fetchHistory(equipment, month, equipmentNum);
 });
 
 monthInput.addEventListener('change', () => {
   const equipment = historyForm.querySelector('input[name="equipment"]:checked')?.value;
-  if (equipment) fetchHistory(equipment, monthInput.value);
+  const equipmentNum = equipmentNumSelect.value;
+  if (equipment) fetchHistory(equipment, monthInput.value, equipmentNum);
 });
 
 
