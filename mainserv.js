@@ -531,6 +531,54 @@ app.delete('/delete-message/:id', async (req, res) => {
   }
 });
 
+//--ROUTE GET: MOST REPEATABLE ISSUES--
+
+app.get('/top-issues', async (req, res) => {
+  try {
+    const currentYear = new Date().getFullYear();
+    const start = new Date(Date.UTC(currentYear, 0, 1));
+    const end = new Date(Date.UTC(currentYear + 1, 0, 1));
+
+    const collections = ['Shuttle', 'AGV', 'RGV', 'Lift'];
+    const results = {};
+
+    for (const type of collections) {
+      const Model = getmodel(type);
+      let groupField = '';
+
+      switch (type) {
+        case 'Shuttle': groupField = '$shuttleNum'; break;
+        case 'AGV': groupField = '$agvNum'; break;
+        case 'RGV': groupField = '$rgvNum'; break;
+        case 'Lift': groupField = '$liftNum'; break;
+      }
+
+      let dateField = '';
+      switch (type) {
+        case 'Shuttle': dateField = 'date'; break;
+        case 'AGV': dateField = 'agvDate'; break;
+        case 'RGV': dateField = 'rgvDate'; break;
+        case 'Lift': dateField = 'liftDate'; break;
+      }
+
+      const data = await Model.aggregate([
+        { $match: { [dateField]: { $gte: start, $lt: end } } },
+        { $group: { _id: groupField, totalIssues: { $sum: 1 } } },
+        { $sort: { totalIssues: -1 } },
+        { $limit: 10 }
+      ]);
+
+      results[type] = data;
+    }
+
+    res.json(results);
+  } catch (err) {
+    console.error('Error loading top issues:', err);
+    res.status(500).send('Failed to load top issues');
+  }
+});
+
+
 //--APPLICACTION EXEC--
 
 updateShuttleData()

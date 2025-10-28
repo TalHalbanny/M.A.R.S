@@ -188,7 +188,6 @@ function enableEditableCells() {
   });
 }
 
-//--ENABLE DELETE BUTTON FUNCTION FOR CONNECTING TO DATABASE--
 
 function enableDeleteButtons() {
 
@@ -242,7 +241,6 @@ equipmentRadios.forEach(radio => {
         url = '/get_AGVS';
         break;
       case 'RGV':
-        // if you have RGVList endpoint, otherwise leave blank
         url = '/get_RGVS';
         break;
       case 'Lift':
