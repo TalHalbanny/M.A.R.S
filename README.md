@@ -4,6 +4,10 @@ MARS was developed for an automated warehouse system. The purpose of MARS is to 
 
 ---
 
+# Author: Tal Halbanny
+
+---
+
 ## Application Screenshots
 
 Here is a visual overview of the MARS Monitoring System interface:
