@@ -1,10 +1,10 @@
-# 🤖 MARS (Maintenance and Reporting System)
+# MARS (Maintenance and Reporting System)
 
 MARS was developed for an automated warehouse system. The purpose of MARS is to monitor the state of robots, document issues, and see the history of repeating issues on certain equipment.
 
 ---
 
-## 📸 Application Screenshots
+## Application Screenshots
 
 Here is a visual overview of the MARS Monitoring System interface:
 
@@ -25,7 +25,7 @@ The monitoring screen displays the live status of every individual shuttle robot
 
 ---
 
-## 🚀 Features
+## Features
 
 *   **Monitoring Automated Robot System:** The application shows the real-time state of each robot in the warehouse.
 *   **Access Every Robot PLC Screen:** Allows authorized users to enter the advanced PLC interface to investigate current issues directly.
@@ -35,7 +35,7 @@ The monitoring screen displays the live status of every individual shuttle robot
 
 ---
 
-## 📖 Monitoring Guide
+## Monitoring Guide
 
 Use this guide to interpret the visual indicators in the monitoring dashboard:
 
