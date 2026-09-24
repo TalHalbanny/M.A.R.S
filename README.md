@@ -1,7 +1,6 @@
 #  MARS (Maintenance and Reporting System)
 
-## Author: Tal Halbanny
-
+ Author: Tal Halbanny
 
 MARS was developed for an automated warehouse system. The purpose of MARS is to monitor the state of robots, document issues, and see the history of repeating issues on certain equipment.
 
